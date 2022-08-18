@@ -1,0 +1,201 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LOOK UP</title>
+
+<script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/gif.js"></script>
+<script src="<%=request.getContextPath() %>/js/board.js"></script>
+
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/memberJoin.css">
+
+<style>
+.profile {
+	border: 4px double;
+	margin: 10px;
+	padding: 10px;
+}
+
+.photo {
+	width: 160px;
+	height: auto;
+	border: 3px solid lightgray;
+	position: absolute;
+	left: 340px;
+	margin: 30px;
+	padding : 3px;
+}
+
+.info1 {
+	display: inline-block;
+}
+
+.info2 {
+	display: block;
+	width: 500px;
+	top: 500px;
+}
+
+.iframe {
+	position: fixed;
+	top: 140px;
+	left: 43%;
+	width: 600px;
+	height: 400px;
+}
+
+#iframe {
+	width: 1000px;
+	height: 450px;
+}
+
+.info1, .info2 {
+	flex: 1;
+	/*     border: 0.1px solid gray; */
+	/* width: 270px; */
+	height: auto;
+	margin: 1px;
+}
+
+
+</style>
+
+
+</head>
+<body>
+
+	<!-- 상단메뉴 -->
+	<header>
+	<nav>
+			<div id="topMenu" class="FF">
+				<div class="title">
+					<a href="<%=request.getContextPath() %>/main/main.jsp">
+						<img class="titleImg" alt="메인배너R.png" src="<%=request.getContextPath() %>/images/메인배너R.png">
+					</a>
+				</div>
+
+				<div class="dropdown FF topText">
+				<a href="<%=request.getContextPath()%>/Logout.do" class="join">LOGOUT</a>		
+			</div>
+			<div class="dropdown FF topText">
+				<a href="<%=request.getContextPath() %>/membermypage/mypageMenu.jsp" class="login">MYPAGE</a>
+			</div>
+
+				<div class="dropdown FF ">
+					<button id="notice" class="dropbtn FF ahover">
+						<span class="dropbtn_icon"></span> 공지
+					</button>
+					<div class="dropdown-content">
+						<a href="<%=request.getContextPath() %>/selectNoticeList.do">공지사항</a> 
+						<a href="<%=request.getContextPath() %>/selectQnaList.do">자주 묻는 질문</a> 
+				<%if(session.getAttribute("loginMember")!=null){ 
+				%> 
+						<a href="<%=request.getContextPath() %>/question/questionList.jsp">1:1문의</a>
+				<% 
+				}
+				%>
+					</div>
+				</div>
+
+				<div class="dropdown FF">
+					<button class="dropbtn FF ahover">
+						<span class="dropbtn_icon"></span> 게시판
+					</button>
+					<div class="dropdown-content">
+						<a href="<%=request.getContextPath()%>/schedule/Schedule.jsp">소식/일정 게시판</a> 
+						<a href="<%=request.getContextPath()%>/LOOKUP/board(갤러리게시판).jsp">관측 게시판</a> 
+						<a href="<%=request.getContextPath()%>/board/board2.jsp">자유 게시판</a> 
+						<a href="<%=request.getContextPath()%>/observersServletGet.do?check=10">관측회게시판</a>
+						<a href="<%=request.getContextPath()%>/map/Map.jsp">천문대 검색</a> 
+					</div>
+				</div>
+			</div>
+	</nav>
+	</header>
+
+	<aside>	
+
+		<ul style="border-radius: 0px 0px 40px 0px; background: black" class="FR">
+			<li><a href='memberdetail.jsp'>회원정보수정</a></li>
+			<li><a href='<%= request.getContextPath()%>/mycontentcheck/mycontentview.jsp'>내 글 보기</a></li>
+			<!-- 문의관리서블릿 따로 만들어야함 -->
+			<li><a href='<%=request.getContextPath() %>/question/questionList.jsp'>문의관리</a></li>
+			<li><a href='<%= request.getContextPath()%>/BlockMember.do'>차단사용자 관리</a></li>
+			<li><a href='<%= request.getContextPath()%>/ObserveCheck.do'>관측회 신청 현황</a></li>
+			<li><a href='<%= request.getContextPath()%>/schedule/memSchedule.jsp'>관심 일정 관리</a></li>
+		</ul>
+
+
+	</aside>
+
+	<!-- 본문 -->
+	<section>
+		<div class="mainContent">
+			<div class="profile">
+
+				<div class="write">
+						<a href="../example/iframeContent.html" target="ifrcomputer" style="color:black; text-decoration-line: none">작성 글 │</a>
+						<a href="../example/iframeReply.html" target="ifrcomputer" style="color:black; text-decoration-line: none">작성 댓글</a>
+				</div>
+
+				<div class="iframe">
+					<iframe id="iframe" SRC="../example/iframeContent.html" name="ifrcomputer"></iframe>
+				</div>
+
+				<div class="infoImg">
+					<img class="photo" alt="하잇.PNG" src="../images/하잇.PNG">
+				</div>
+
+				<div class="info1">
+					<div class="id">
+						<label> 아이디</label> 
+						<input type="text" value="아이디" class="infoLogin">
+					</div>
+						<br>
+					<div class="pass">
+						<label> 비밀번호</label> 
+						<input type="text" value="비밀번호" class="infoPass">
+					</div>
+						<br>
+					<div class="name">
+						<label> 이름</label> 
+						<input type="text" value="이름" class="infoName">
+					</div>
+						<br>
+				</div>
+				<div class="info2">
+					<div class="birth">
+						<label> 생년월일</label> 
+						<input type="text" value="생년월일" class="infoBirth">
+					</div>
+						<br>
+					<div class="addr">
+						<label> 주소</label> 
+						<input type="text" value="주소" class="infoAddr">
+					</div>
+						<br>
+					<div class="mail">
+						<label> 이메일</label> 
+						<input type="text" value="이메일" class="infoMail">
+					</div>
+				</div>
+				
+				<div class="btns">
+					
+					<!-- 활동정지 설정 모달창으로 이동 -->
+					<input type="button" value="활동정지" class="btnStop">
+					
+					<!-- 회원목록페이지로 이동 -->
+					<input type="button" value="뒤로가기" class="btnBack">
+				
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+</body>
+</html>

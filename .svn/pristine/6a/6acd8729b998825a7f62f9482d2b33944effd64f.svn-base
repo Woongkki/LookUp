@@ -1,0 +1,323 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'EliceDigitalBaeum-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* login.jsp에서 사용 */
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* ---------------------------------------------------------- */
+
+/* 폰트 설정 */
+.FF{
+		font-family: 'EliceDigitalBaeum-Bd', sans-serif;/*웹 폰트 지정*/
+		color: white;
+}
+
+.FR{
+		font-family: 'EliceDigitalBaeum', sans-serif;/*웹 폰트 지정*/
+		color: white;
+}
+
+/* login.jsp에서 사용 */
+.FK{
+		font-family: 'GangwonEduPowerExtraBoldA', sans-serif;/*웹 폰트 지정*/
+		color: #1c2599;
+}
+/* ---------------------------------------------------------- */
+
+html { 
+/* 	background: url(../images/space.jpg) no-repeat center center fixed;  */
+/* 	background: url(../images/게시판워터마크.png) no-repeat center center fixed;  */
+	background-color : white;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+body{
+	margin:0;
+	min-width : 1400px;
+	box-sizing: border-box;
+}
+
+#topMenu{
+	height : 20px;
+	background-color: rgba( 0, 0, 0, 0.6 );
+	padding : 25px;
+}
+
+#title{
+	font-family: 'Corben', cursive;
+	color: white;
+	letter-spacing: 0.1rem;
+	text-shadow: 0px 3px 3px rgba(0, 0, 0, 80%);
+	display: contents;
+}
+
+.title{
+	display: contents;
+}
+
+.titleImg{
+	width: 130px;
+    position: relative;
+    top: -27px;
+}
+
+
+.dropdown, .search{
+	float : right;
+	margin-bottom : 50px;
+	display : flex;
+	justify-content : center;
+	align-items:center;
+	margin-bottom: 30px;
+	padding-bottom : 10px;
+}
+
+.mainCon{
+	
+	width : 350px;
+	height: 500px;
+	
+	
+}
+
+#content{
+	display:flex;
+	position : absolute;
+	top : 30%;
+	left : 13%;
+}
+
+.topText{
+	top : 0.1px;
+}
+
+
+
+
+/* ---------------------------------------------------------- */
+/* a 태그*/
+a:link {
+  color : white;
+}
+
+a:visited {
+  color : white;
+}
+
+a:hover {
+  color : #9696FF;
+}
+
+a:active {
+  color : white
+}
+
+
+
+/* ---------------------------------------------------------- */
+
+/* 드롭다운메뉴 */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.dropdown, .search{
+  position : relative;
+  display : inline-block;
+  bottom: 12px;
+  margin : 3px;
+}
+
+.dropbtn_icon{
+  font-family : 'Material Icons';
+}
+.dropbtn{
+/*   border-radius : 4px; */
+  background-color: #f5f5f5;
+  font-weight: 400;
+  color : rgb(37, 37, 37);
+  padding : 12px;
+  width: 150px;
+  text-align: center;
+  cursor : pointer;
+  font-size : 12px;
+  border-radius: 10px;
+}
+.dropdown-content{
+  display : none;
+  position : absolute;
+  z-index : 1; /*다른 요소들보다 앞에 배치*/
+  font-weight: 400;
+  background-color: #f9f9f9;
+  min-width : 140px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.dropdown-content a{
+  display : block;
+  text-decoration : none;
+  color : rgb(37, 37, 37);
+  font-size: 12px;
+  padding : 12px 20px;
+}
+
+.dropdown-content a:hover{
+  background-color : #ececec
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.ahover:hover{
+	color :  red;
+}
+
+/* ---------------------------------------------------------- */
+/* 로그인 / 회원가입 */
+
+.login .join{
+	display: inline-block;
+    color: red;
+	
+}
+
+/* ---------------------------------------------------------- */
+/* 검색메뉴 */
+.search {
+    display: inline-flex;
+    width: 150px;
+    color : black;
+}
+
+input {
+  width: 100%;
+  height: 21px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+img {
+  position : absolute;
+  width: 17px;
+  top: 13px;
+  right: 12px;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------- */
+/* 사이드 메뉴 */
+
+ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  width: 200px;
+  background: rgba(0,0,0,0.2);
+  height: 40%;
+  overflow: auto;
+  position: fixed;
+  color : white;
+  border-bottom: 2px solid rgba( 0, 0, 0, 0.3 );
+}
+
+li a {
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: white;
+  font-weight: bold;
+}
+
+li a:hover {
+font-family: 'EliceDigitalBaeum-Bd', sans-serif;
+  background-color: rgba( 255, 255, 255, 0.5 );
+  color: rgb(61, 96, 148);
+}
+
+li a.home {
+ background-color: rgba( 0, 0, 0, 0.5 );
+  color: #fff;
+}
+/* ---------------------------------------------------------- */
+/* 본문 */
+.mainContent{
+	width: 89%;
+    height: 900px;
+	margin-left: 200px;
+	background: url(../images/게시판워터마크2.png);
+	position: sticky;
+}
+
+.passInputDiv {
+	border: 1px solid black;
+	width: 1000px;
+	height: 50%;
+	margin: 50px;
+	background-image: url("../images/배경2뿌옇게.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px 5px #46649B;
+	text-align: center;}
+
+.passText{
+	color : white;
+}
+
+/* ---------------------------------------------------------- */
+/* 버튼 */
+
+.btnC {
+  display: inline-block;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  color: rgba(223,190,106,0.7);
+  border-radius: 0;
+  padding: 18px 80px 20px;
+  transition: all 0.7s ease-out;
+  background: linear-gradient(270deg, rgba(223,190,106,0.8), rgba(146,111,52,0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  border: 1px solid rgba(223,190,106,0.3);
+}
+
+.btnC:hover {
+  color: #fff;
+  border: 1px solid rgba(223,190,106,0);
+  color: white;
+  background-position: 99% 50%;
+}
+
+/* ---------------------------------------------------------- */
+

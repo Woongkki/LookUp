@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	
+	<sqlMap  namespace='messege'>
+	
+	<select id='qsrNoListSearch' parameterClass='string' resultClass='String'>
+	 select QUESTION_ROOM_NO from QUESTION where mem_id=#data#
+	</select>
+	
+	<select id='msrNoSearch' parameterClass='string' resultClass='int'>
+	select MESSAGE_ROOM_NO from CATTING
+	  where mem_id=#data#
+	
+	</select>
+	
+	
+	<select id='qsListSearch' parameterClass='string' resultClass='questionVO'>
+	select*from question where question_room_no=#data#
+	</select>
+	
+	<select id='msListSearch' parameterClass='int' resultClass='messegeVO'>
+	select*from catting where message_room_no=$data$ order by 1
+	</select>
+	
+	
+	
+	
+	</sqlMap>

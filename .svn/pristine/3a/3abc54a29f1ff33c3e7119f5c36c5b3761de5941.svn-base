@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="observatory">
+
+	<select id="selectObservatory" resultClass="ObservVO" parameterClass="String">
+		select OBSERVATORY_INFO, OBSERVATORY_POSITION, OBSERVATORY_TEL, OBSERVATORY_URL
+  		from OBSERVATORY
+ 		where OBSERVATORY_NAME = #OBSERVATORY_NAME#
+	
+	</select>
+
+</sqlMap>

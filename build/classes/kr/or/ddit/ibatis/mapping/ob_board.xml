@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="obBoard">
+	
+	<!-- 관측 게시판 글 생성 -->
+	<insert id="obBoardInsert" parameterClass="ObBoardVO">
+		insert into ob_board
+		  values(ob_board_no_seq.nextval, #mem_id#, #title#, #content#, sysdate, sysdate, #ob_num#, #ob_memnumber#)
+	</insert>
+	
+	<!-- 관측 게시판 글 전체 출력 -->
+	<select id="obBoardSelectAll" resultClass="ObBoardVO">
+		select * from ob_board order by Ob_No desc
+	</select>
+	
+	<!-- 관측 게시판 글 상세 조회 -->
+	<select id="obBoardRead" parameterClass="int" resultClass="ObBoardVO">
+		select * from ob_board
+		 where ob_no = #data#
+	</select>
+	
+	<!-- 관측 게시판 총 글 개수 조회 -->
+	<select id="obBoardCount" resultClass="int">
+		select count(*) from ob_board		 
+	</select>
+	
+	<!-- 관측회 현재 인원 조회 -->
+	<select id="obBoardNowNum" parameterClass="String" resultClass="int">
+		select count(*) from ob_meeting
+		 where ob_num = #data#
+	</select>
+	
+	<!-- 관측회 참가 신청 -->
+	<insert id="obMeetingInsert" parameterClass="ObBoardVO">
+		insert into ob_meeting
+		values(ob_meeting_seq.nextval, #mem_id#, #ob_num#)
+		 
+		<selectKey keyProperty="obmeeting_no" resultClass="String">
+			select ob_meeting_seq.currval from dual
+		</selectKey> 
+	</insert>
+	
+	<!-- 관측회 중복 신청 확인 -->
+	<select id="obMeetingCheck" parameterClass="ObBoardVO" resultClass="String">
+		select ob_num from ob_meeting
+		 where mem_id=#mem_id# and ob_num = #ob_num#
+	</select>
+	
+</sqlMap>

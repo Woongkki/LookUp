@@ -1,0 +1,51 @@
+package kr.or.ddit.member.vo;
+
+public class MessegeVO {
+private int message_no      ;
+private int message_room_no ;
+private String mem_id          ;
+private String mem_id2         ;
+private String content         ;
+private String read_date       ;
+@Override
+public String toString() {
+	return "MessegeVO [message_no=" + message_no + ", message_room_no=" + message_room_no + ", mem_id=" + mem_id
+			+ ", mem_id2=" + mem_id2 + ", content=" + content + ", read_date=" + read_date + "]";
+}
+public int getMessage_no() {
+	return message_no;
+}
+public void setMessage_no(int message_no) {
+	this.message_no = message_no;
+}
+public int getMessage_room_no() {
+	return message_room_no;
+}
+public void setMessage_room_no(int message_room_no) {
+	this.message_room_no = message_room_no;
+}
+public String getMem_id() {
+	return mem_id;
+}
+public void setMem_id(String mem_id) {
+	this.mem_id = mem_id;
+}
+public String getMem_id2() {
+	return mem_id2;
+}
+public void setMem_id2(String mem_id2) {
+	this.mem_id2 = mem_id2;
+}
+public String getContent() {
+	return content;
+}
+public void setContent(String content) {
+	this.content = content;
+}
+public String getRead_date() {
+	return read_date;
+}
+public void setRead_date(String read_date) {
+	this.read_date = read_date;
+}
+}

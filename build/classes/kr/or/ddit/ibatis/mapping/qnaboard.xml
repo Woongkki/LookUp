@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//iBatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="qna">
+
+	<select id="totalCount" resultClass="int">
+		select count(*) from qna_board
+	</select>
+
+	<select id="selectQnaList" resultClass="qnaVo">
+		select * from qna_board order by qna_no desc
+	</select>
+	
+	<select id="qnaDetail" resultClass="qnaVo" parameterClass="int">
+		select * from qna_board where qna_no=#qna_no#
+	</select>
+	
+	<delete id="deleteQna" parameterClass="int">
+		delete from qna_board where qna_no=#qna_no#
+	</delete>
+	
+	<update id="updateQna" parameterClass="qnaVo">
+		update qna_board set title=#title#, content=#content#, create_date=sysdate
+		where qna_no=#qna_no#
+	</update>
+	
+	<insert id="insertQna" parameterClass="qnaVo">
+		insert into qna_board(qna_no, mem_id, title, content, create_date)
+		values(qna_board_no_seq.nextval, #mem_id#, #title#, #content#, sysdate)
+	</insert>
+
+</sqlMap>

@@ -1,0 +1,174 @@
+package kr.or.ddit.member.service;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.ibatis.config.SqlMapClientFactory;
+import kr.or.ddit.member.dao.IMemberDao;
+import kr.or.ddit.member.dao.MemberDaoImpl;
+import kr.or.ddit.member.vo.MemberVO;
+import kr.or.ddit.member.vo.ZipVO;
+
+public class MemberServiceImpl implements IMemberService{
+	private static IMemberService service;
+	private IMemberDao dao;
+	private MemberServiceImpl() {
+		dao=MemberDaoImpl.getInstance();
+	}
+	public static IMemberService getInstance() {
+		if(service==null)service=new MemberServiceImpl();
+		return service;
+	}
+
+	@Override
+	public int memberIdCheck(String id) {
+		int cnt=0;
+		try {
+			cnt=dao.memberIdCheck(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	@Override
+	public List<ZipVO> zipList(String s) {
+		List<ZipVO>list=null;
+		try {
+			list=dao.zipList(s);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	@Override
+	public int insertMember(MemberVO vo) {
+		int cnt=0;
+		try {
+			cnt=dao.insertMember(vo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	@Override
+	public int memlogin(Map<String, String> info) {
+		int cnt=0;
+		try {
+			cnt=dao.memlogin(info);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	@Override
+	public int logidCheck(String id) {
+		int cnt=0;
+		try {
+			cnt=dao.logidCheck(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	@Override
+	public MemberVO memberIdSearch(String id) {
+		MemberVO vo=null;
+		try {
+			vo=dao.memberIdSearch(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	@Override
+	public String memStatus(String memid) {
+		String s="";
+		try {
+			s=dao.memStatus(memid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return s;
+	}
+	@Override
+	public List<ZipVO> zipAllSearch() {
+		List<ZipVO>list=null;
+		try {
+			list=dao.zipAllSearch();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	@Override
+	public int updateMember(MemberVO memVo) {
+	      int cnt=0;
+	      try {
+			cnt=dao.updateMember(memVo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	@Override
+	public int nomalinsertMember(String memId) {
+		int cnt=0;
+		try {
+			cnt=dao.nomalinsertMember(memId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	@Override
+	public void loginlogCreate(Map<String, String> map) {
+		// TODO Auto-generated method stub
+	      try {
+			dao.loginlogCreate(map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	@Override
+	public int memStatusBUpdate(String id) {
+		         int cnt=0;
+		         try {
+		        	
+					cnt=dao.memStatusBUpdate(id);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		return cnt;
+	}
+	@Override
+	public MemberVO login(Map<String, String> para) {
+		MemberVO vo=null;
+		  try {
+			vo=dao.login(para);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		return vo;
+	}
+
+	
+
+
+}

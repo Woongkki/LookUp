@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	
+	<sqlMap  namespace='black'>
+	
+	<select id='blacklist' parameterClass='string' resultClass='string'>
+	select block_id from block where mem_id=#data#
+	</select>
+	
+	<delete id='blockCancele' parameterClass='map'>
+	delete from block where mem_id=#mem_id#
+	        and block_id=#cnid#
+	</delete>
+	
+	
+	
+	</sqlMap>

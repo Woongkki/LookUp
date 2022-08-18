@@ -1,0 +1,92 @@
+@charset "UTF-8";
+.btn1 {
+  display: inline-block;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 17px;
+  letter-spacing: 0.3em;
+  color: white;
+  border-radius: 20px;
+  padding: 15px 60px 15px;
+  transition: all 0.7s ease-out;
+  background: linear-gradient(270deg, rgba(42,0,102,0.8), rgba(78,36,138,0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  border: 2px solid white;
+}
+
+.btn2{
+	display: inline-block;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 17px;
+  letter-spacing: 0.3em;
+  color: white;
+  border-radius: 20px;
+  padding: 15px 60px 15px;
+  transition: all 0.7s ease-out;
+  background: linear-gradient(270deg, rgba(33,116,132,0.8), rgba(73,160,157,0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  border: 2px solid white;
+}
+
+.btn3{
+	display: inline-block;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 17px;
+  letter-spacing: 0.3em;
+  color: white;
+  border-radius: 20px;
+  padding: 15px 60px 15px;
+  transition: all 0.7s ease-out;
+  background: linear-gradient(270deg, rgba(158,34,37,0.8), rgba(183,73,89,0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  border: 2px solid white;
+}
+
+.btn4{
+	display: inline-block;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 17px;
+  letter-spacing: 0.3em;
+  color: white;
+  border-radius: 20px;
+  padding: 15px 60px 15px;
+  transition: all 0.7s ease-out;
+  background: linear-gradient(270deg, rgba(0,4,81,0.8), rgba(57,59,137,0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  border: 2px solid white;
+}
+
+.btnMain:hover {
+  color: #fff;
+  border: 2px solid white;
+  color: white;
+  background-position: 99% 50%;
+}
+

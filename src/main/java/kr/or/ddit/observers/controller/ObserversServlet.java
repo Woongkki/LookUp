@@ -1,0 +1,232 @@
+package kr.or.ddit.observers.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import kr.or.ddit.observers.service.IOb_BoardService;
+import kr.or.ddit.observers.service.IObserversService;
+import kr.or.ddit.observers.service.Ob_BoardServiceImpl;
+import kr.or.ddit.observers.service.ObserversServiceImpl;
+import kr.or.ddit.observers.vo.Ob_BoardVO;
+import kr.or.ddit.observers.vo.ObserversVO;
+
+@WebServlet("/observersServlet.do")
+public class ObserversServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		int check = Integer.parseInt(request.getParameter("check"));
+		System.out.println(check);
+		IObserversService service = ObserversServiceImpl.getInstance();
+		IOb_BoardService serviceBoard = Ob_BoardServiceImpl.getInstance();
+		
+		switch(check) {
+		case 1: insertOb(request, response, service); break; // 관측회 생성
+		case 2: selectOb(request, response, service); break; // 관측회 목록 출력
+		
+		case 11: insertOB_Board(request, response, serviceBoard); break; // 관측회 게시판 글 생성
+		case 12: obBoardSelectAll(request, response, serviceBoard); break; // 관측회 게시판 목록 출력
+//		case 13: obBoardRead(request, response, serviceBoard); break; // 관측회 게시글 상세 조회
+		
+		case 21: obBoardNowNum(request, response, serviceBoard); break; // 관측회 게시판 현재 인원 조회
+		case 22: obMeetingCheck(request, response, serviceBoard); break; // 관측회 중복 신청 확인
+		case 23: obMeetingInsert(request, response, serviceBoard); break; // 관측회 참가 신청 처리
+		default :break;
+		}
+		
+	}
+
+	// 관측회 중복 신청 확인
+	private void obMeetingCheck(HttpServletRequest request, HttpServletResponse response, IOb_BoardService serviceBoard) throws IOException {
+		String ob_num = request.getParameter("ob_num");
+		String mem_id = request.getParameter("mem_id");
+		
+		Ob_BoardVO vo = new Ob_BoardVO();
+		vo.setMem_id(mem_id);
+		vo.setOb_num(ob_num);
+		
+		String resultDao = serviceBoard.obMeetingCheck(vo);
+		
+		System.out.println(resultDao);
+		
+		Gson gs = new Gson();
+		
+		String result = gs.toJson(resultDao); 
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("appliction/json charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print(result);
+		out.flush();
+		
+		System.out.println("obMeetingCheck 서블릿 끝");
+		
+		
+	}
+
+	// 관측회 참가 신청 처리
+	private void obMeetingInsert(HttpServletRequest request, HttpServletResponse response, IOb_BoardService serviceBoard) throws IOException {
+		String ob_num = request.getParameter("ob_num");
+		String mem_id = request.getParameter("mem_id");
+		
+		Ob_BoardVO vo = new Ob_BoardVO();
+		vo.setMem_id(mem_id);
+		vo.setOb_num(ob_num);
+		
+		String resultDao = serviceBoard.obMeetingInsert(vo);
+		
+		Gson gs = new Gson();
+		
+		String result = gs.toJson(resultDao); 
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("appliction/json charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print(result);
+		out.flush();
+		
+		System.out.println("obMeetingInsert 서블릿 끝");
+		
+	}
+
+	// 관측회 게시판 현재 인원 조회
+	private void obBoardNowNum(HttpServletRequest request, HttpServletResponse response, IOb_BoardService serviceBoard) throws IOException {
+		String Ob_num = request.getParameter("observerNum");
+		
+		int NowNum = serviceBoard.obBoardNowNum(Ob_num);
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("appliction/json charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print(NowNum);
+		out.flush();
+		
+		System.out.println("obBoardNowNum 서블릿 끝");
+	}
+
+	// 관측회 게시글 상세 조회
+	private void obBoardRead(HttpServletRequest request, HttpServletResponse response, IOb_BoardService serviceBoard) throws IOException, ServletException {
+
+		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+		System.out.println(boardNum);
+		
+		Ob_BoardVO vo = new Ob_BoardVO();
+		
+		vo = serviceBoard.obBoardRead(boardNum);
+		
+		request.setAttribute("boardInfo", vo);
+		
+		request.getRequestDispatcher("/sum/board(관측회글조회).jsp").forward(request, response);
+		
+	}
+
+	// 관측회 게시판 목록 출력
+	private void obBoardSelectAll(HttpServletRequest request, HttpServletResponse response, IOb_BoardService serviceBoard) throws IOException {
+
+		List<Ob_BoardVO> list = new ArrayList<Ob_BoardVO>();
+		
+		list = serviceBoard.obBoardSelectAll();
+		
+		Gson gs = new Gson();
+		
+		String result = gs.toJson(list);
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print(result);
+		out.flush();
+		
+		System.out.println("obBoardSelectAll 서블릿");
+		
+		
+	}
+
+	// 관측회 게시판 생성
+	private void insertOB_Board(HttpServletRequest request, HttpServletResponse response, IOb_BoardService serviceBoard) throws IOException {
+		String mem_id = request.getParameter("mem_id");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String ob_num = request.getParameter("ob_num");
+		String ob_memNumber = request.getParameter("num");
+		
+		Ob_BoardVO vo = new Ob_BoardVO();
+		vo.setMem_id(mem_id);
+		vo.setTitle(title);
+		vo.setContent(content);
+		vo.setOb_num(ob_num);
+		vo.setOb_memnumber(ob_memNumber);
+		
+		int res = serviceBoard.obBoardInsert(vo);
+		
+		if(res == 1) {
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("applcation/json charset=utf-8");
+			PrintWriter out = response.getWriter();
+			
+			out.print(res);
+			out.flush();
+		}
+		
+		System.out.println("관측회 게시판 생성 서블릿 check");
+		
+	}
+
+	// 관측회 목록 출력
+	private void selectOb(HttpServletRequest request, HttpServletResponse response, IObserversService service) throws IOException {
+		System.out.println("관측회 목록 출력");
+		List<ObserversVO> vo = new ArrayList<ObserversVO>();
+		
+		vo = service.selectOb();
+		
+		Gson gs = new Gson();
+		
+		String result = gs.toJson(vo);
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print(result);
+		out.flush();
+		
+		System.out.println("selectOb 서블릿");
+	}
+
+	// 관측회 생성
+	private void insertOb(HttpServletRequest request, HttpServletResponse response, IObserversService service) {
+		String num = request.getParameter("text");
+		String start = request.getParameter("startDate");
+		String end = request.getParameter("endDate");
+		String pos = request.getParameter("position");
+		
+		System.out.println(num + "\n" + start + "\n" + end + "\n" + pos);
+		
+		ObserversVO vo = new ObserversVO();
+		vo.setOb_num(num);
+		vo.setOb_start(start);
+		vo.setOb_end(end);
+		vo.setOb_position(pos);
+		
+		service.insertOb(vo);
+		
+		System.out.println("insertOb 테스트");
+	}
+
+}

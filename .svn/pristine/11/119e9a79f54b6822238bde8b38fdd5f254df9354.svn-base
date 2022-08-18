@@ -1,0 +1,213 @@
+/**
+ * 
+ */
+ 
+ var replyUpdate=function(){
+	  $.ajax({
+		url:'/board/ReplyDelte.do',
+		type:'get',
+		data:{
+			"renum":actionIdx
+		},
+		success:function(res){
+			
+		},
+		error:function(xhr){
+			
+		},
+		dataType:'json'
+	})
+}
+ 
+ 
+ var replyDelete=function(target){
+	$.ajax({
+		url:'/board/ReplyDelete.do',
+		type:'get',
+		data:{'renum':actionIdx},
+		success:function(res){
+			//alert(res.sw);
+			$(target).parents('.rcode').remove();
+		},
+		error:function(xhl){
+			alert("상태 : "+xhl.status);
+		},
+		dataType:'json'
+		
+	})
+}
+ 
+ 
+ 
+ var replyList=function(target){
+	//target변수는 등록버튼 또는 제목의 a태그
+	
+	      $.ajax({
+		    url:'/board/ReplyList.do',
+		    type:'get',
+		    data:{"bonum":actionIdx},
+		    success:function(res){
+			 rcode="";
+			$.each(res,function(i,v){
+			rcode += '    <div class="rcode">';
+			rcode += '	  <p class="p1">';
+			rcode += '	    작성자 : ' + v.name + ' &nbsp;&nbsp;&nbsp;';
+			rcode += '	    날짜 : ' + v.redate + '&nbsp;&nbsp;&nbsp;';
+			rcode += '	  </p>';
+			rcode += '	  <p class="p2">';
+			rcode += '	    <input idx="'+ v.renum +'" class="action" name="r_modify" type="button" value="댓글 수정">';
+			rcode += '	    <input idx="'+v.renum +'" class="action" name="r_delete" type="button" value="댓글 삭제">';
+			rcode += '	  </p>';
+			rcode += '	  <hr>';
+			rcode += '	  <p class="p3">';
+			rcode += v.cont.replace(/\r/g,"").replace(/\n/g,"<br>");
+			rcode += '	  </p>';
+		    rcode += '    </div>';
+			})
+		cardBody=$(target).parents('.card')
+			              .find('.card-body');
+			              
+	     cardBody.find('.rcode').remove()
+	     cardBody.append(rcode); 
+			      
+           
+
+		},
+		error:function(xhl){
+			
+		},
+		dataType:'json'
+	})
+	
+	       
+}
+ 
+ 
+ var replyInsert=function(target){
+	$.ajax({
+		url:'/board/ReplyInsert.do',
+		type:'post',
+		data:reply,//reply객체 bnum,cont,name
+		success:function(res){
+			alert(res.sw);
+			//댓글 출력
+			replyList(target);
+		},
+		error:function(xhr){
+			alert('상태 : '+xhr.status);
+		},
+		dataType:'json'
+		
+	})
+		
+	
+}
+ 
+ 
+ 
+ 
+ var boardDelete = function(){
+	typevalue = $('#stype option:selected').val();
+	wordvalue = $('#sword').val().trim();
+	
+	$.ajax({
+		url : '/board/boardDelet.do',
+		type : 'post',
+		data : {"num" : actionIdx,
+				"type" : typevalue,
+				"word" : wordvalue,
+				"page" : currentPage
+				},
+	    success : function(res){
+			if(res.sw == "ok"){
+				if(res.totalp < currentPage){
+					currentPage = res.totalp;
+				}
+				listServer();
+			}else{
+				alert("삭제 실패");
+			}
+		},
+		error : function(xhr){
+			alert("상태 : " + xhr.status + " 체크");
+		},
+		dataType : 'json'
+	})
+}
+ 
+ 
+ var freeboardlist = function(){
+	$.ajax({
+		url : '/middleProject/List.do',
+		type : 'post',
+		data : {'page' : currentPage,
+		        'stype' : typevalue,
+		        'sword' : wordvalue},
+		success : function(res){
+			
+
+					
+			str='';
+			str+='<tr>'
+	    	str+='<th scope="row" class="tableNum1">번호</th>   '
+	    	str+='<th scope="row" class="tableNum2">제 목</th>  '
+	    	str+='<th scope="row" class="tableNum3">작성자</th> '
+	    	str+='<th scope="row" class="tableNum4">등록일</th> '
+	    	
+  			str+='</tr>';                                           
+			code = "<div id='accordion'>";			
+			$.each(res.datas, function(i, v){
+			str+='<tr class="tablecilck" id="'+v.free_no+'">';
+            str+='	<th scope="row">'+v.free_no+'</th>';
+            str+='	<td>'+v.title+'</td>';
+            str+='	<td>'+v.mem_name+'</td>';
+            str+='	<td>'+v.create_date+'</td>';
+            str+='</tr>';	
+				
+				
+
+
+			}) // 반복문
+
+			
+			$('#list').html(str);
+			
+			pcode ="";
+			
+			
+			// 이번 버튼 출력
+			if(res.startp > 1){
+				pcode += " <li class='pr' title='이전 페이지로 이동' id='pr'><a href='#'>이전><span><i class='icon-angle-right'></i></span></a></li>";
+  			
+			}
+			
+		
+  			
+			// 페이지 목록 출력
+			for(i = res.startp; i <= res.endp; i++){
+				if(currentPage == i){
+					pcode += " <li class='active' title='현재 페이지'><a href='#'>"+i+"</a></li>>";
+				
+				}else{
+					pcode += "<li ><a href='#'>"+i+"</a></li>>";
+				
+				}
+			}
+			pcode += '</ul>'
+			
+			
+			// 다음 버튼 출력
+			if(res.endp < res.totalp){
+				pcode += " <li class='next' title='다음 페이지로 이동'id='next'><a href='#'>다음><span><i class='icon-angle-right'></i></span></a></li>";
+  			    
+			}
+			
+			
+			$('.pagination').html(pcode);
+		},
+		error : function(xhr){
+			alert("상태 : " + xhr.status);
+		},
+		dataType : 'json'
+	})
+} //listServer 종료

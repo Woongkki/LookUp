@@ -1,0 +1,37 @@
+package kr.or.ddit.board.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.board.vo.FreeComment2VO;
+import kr.or.ddit.board.vo.FreeCommentVO;
+import kr.or.ddit.board.vo.FreeboardDetailVO;
+import kr.or.ddit.board.vo.FreeboardListVO;
+import kr.or.ddit.board.vo.ObssVO;
+
+public interface IFreeBoardDao {
+
+	public int totalCount(Map<String, String> map) throws SQLException;
+
+	public List<FreeboardListVO> selectList(Map<String, Object> map) throws SQLException;
+
+	public FreeboardDetailVO fdetail(String id)throws SQLException;
+
+	public int fbcount(String id)throws SQLException;
+
+	public List<FreeCommentVO> fcvlist(String id)throws SQLException;
+	
+	public int freecomentin(Map<String, String> para)throws SQLException;
+	
+	public int freecr(Map<String, String> para)throws SQLException;
+	
+	public void fc2in(Map<String, String> para)throws SQLException;
+
+	public int fec2cnt(String comment_no) throws SQLException;
+
+	public List<FreeComment2VO> fc2list(int comment_no)throws SQLException;
+
+	public List<ObssVO> oblist(String id)throws SQLException;
+
+}

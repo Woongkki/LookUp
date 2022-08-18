@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	
+	<sqlMap  namespace='observe'>
+	<select id='oblist' parameterClass='string' resultClass='observeVO'>
+	select distinct a.ob_num, a.ob_end, a.ob_start, a.ob_position
+from observers a,ob_meeting b
+  where a.ob_num=b.ob_num
+    and b.mem_id=#data#
+	</select>
+	
+	
+	
+	</sqlMap>
+	

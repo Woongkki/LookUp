@@ -1,0 +1,64 @@
+package kr.or.ddit.qna.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.ibatis.config.SqlMapClientFactory;
+import kr.or.ddit.qna.vo.QuestionVO;
+
+public class QuesDaoImpl implements IQuesDao{
+	private SqlMapClient client;
+	private static IQuesDao dao;
+	private QuesDaoImpl() {
+		client = SqlMapClientFactory.getSqlMapClient();
+	}
+	
+	public static IQuesDao getInstance() {
+		if(dao==null) dao = new QuesDaoImpl();
+		return dao;
+	}
+
+	@Override
+	public List<QuestionVO> selectQuesList() throws SQLException {
+		return client.queryForList("question.selectQuesList");
+	}
+
+	@Override
+	public List<QuestionVO> quesDatail(String no) throws SQLException {
+		return client.queryForList("question.quesDetail", no);
+	}
+
+	@Override
+	public int quesDelete(int no) throws SQLException {
+		return client.delete("question.quesDelete", no);
+	}
+
+	@Override
+	public int answerInsert(QuestionVO vo) throws SQLException {
+		return (int) client.update("question.answerInsert", vo);
+	}
+
+	@Override
+	public int quesInsert(QuestionVO vo) throws SQLException {
+		System.out.println("다오 통과");
+		System.out.println(vo);
+		int cnt = 0;
+		Object obj = client.insert("question.quesInsert", vo);
+		if(obj==null) cnt = 1;
+		return cnt;
+		
+	}
+
+	@Override
+	public int seqInsert(QuestionVO vo) throws SQLException {
+		int cnt = 0;
+		Object obj = client.insert("question.seqInsert", vo);
+		if(obj==null) cnt = 1;
+		return cnt;
+		
+		
+	}
+
+}

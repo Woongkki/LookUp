@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="schedule">
+
+	<select id="allSchedule" resultClass="ScheVo">
+		select SCHEDULE_TITLE, SCHEDULE_DATE, SCHEDULE_NO, SCHEDULE_CONTENT 
+		  from schedule
+		 where status = 'T' or status = 'A' 
+	</select>
+
+
+	<insert id="insertSchedule" parameterClass="ScheVo">
+		INSERT INTO SCHEDULE 
+		VALUES (SCHE_NO_SEQ.nextval,
+				to_date(#SCHEDULE_DATE#), 
+				#SCHEDULE_TITLE#,
+				#SCHEDULE_CONTENT#, 
+				'T', 
+				sysdate,
+				sysdate)
+	</insert>
+	 
+	<delete id="deleteSchedule" parameterClass="ScheVo">
+		DELETE FROM SCHEDULE
+		 WHERE SCHEDULE_TITLE = #SCHEDULE_TITLE#
+		   AND SCHEDULE_DATE = #SCHEDULE_DATE#	
+	</delete> 
+	
+	<update id="updateSchedule" parameterClass="ScheVo">
+		UPDATE SCHEDULE 
+		   set SCHEDULE_TITLE = #SCHEDULE_TITLE#,
+		       SCHEDULE_CONTENT = #SCHEDULE_CONTENT#,	
+		       SCHEDULE_UPDATE = sysdate
+		 where SCHEDULE_NO = #SCHEDULE_NO#     	   
+	</update>
+	
+	<insert id="addMemSchedule" parameterClass="ScheVo">
+	 	INSERT INTO MEM_LIKE
+	 	VALUES (#MEM_ID#,
+	 	          (SELECT SCHEDULE_NO 
+	 	            FROM SCHEDULE
+	 	           WHERE SCHEDULE_TITLE = #SCHEDULE_TITLE#
+		             AND SCHEDULE_DATE = #SCHEDULE_DATE#),null)
+	
+	
+	</insert>
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

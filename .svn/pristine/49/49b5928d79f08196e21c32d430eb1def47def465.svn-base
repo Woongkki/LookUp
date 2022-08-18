@@ -1,0 +1,83 @@
+package kr.or.ddit.schedule.service;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.ddit.schedule.dao.IScheduleDao;
+import kr.or.ddit.schedule.dao.ScheduleDaoImpl;
+import kr.or.ddit.schedule.vo.ScheVO;
+
+
+public class ScheduleServiceImpl implements IScheduleService{
+
+	private IScheduleDao dao;
+	private static IScheduleService service;
+	
+	private ScheduleServiceImpl() {
+		dao = ScheduleDaoImpl.getInstance(); 
+	}
+	
+	public static IScheduleService getInstance() {
+		if(service == null) service = new ScheduleServiceImpl();
+		return service;
+	}
+	
+
+	
+	@Override
+	public String insertSchedule(ScheVO vo) {
+		String res = ""; 
+		try {
+			res = dao.insertSchedule(vo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public List<ScheVO> allSchedule() {
+		List<ScheVO> list = null;
+		
+		try {
+			list = dao.allSchedule();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int deleteSchedule(ScheVO vo) {
+		int res = 0; 
+		try {
+			res = dao.deleteSchedule(vo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public int updateSchedule(ScheVO vo) {
+		int res = 0;
+		try {
+			res = dao.updateSchedule(vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+}
+
+
+
+
+
+
+

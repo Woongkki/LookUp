@@ -1,0 +1,90 @@
+<%@page import="kr.or.ddit.vo.MessegeVO"%>
+<%@page import="kr.or.ddit.vo.QuestionVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$(".content").css("display", "none");
+	
+})
+
+</script>
+
+</head>
+<body>
+<%
+List<List<QuestionVO>>qsList=(List<List<QuestionVO>>)request.getAttribute("ql");
+List<List<MessegeVO>>msList=(List<List<MessegeVO>>)request.getAttribute("ml");
+%>
+<h2>문의 대화방 내역</h2>
+
+<table border='1'>
+<tr><th>카테고리 번호</th><th>질문</th><th>답변</th><th>질문한 날짜</th></tr>
+<% 
+if(qsList!=null&&qsList.size()!=0){
+for(List<QuestionVO> v2:qsList){	
+for(QuestionVO vo:v2){
+%>
+<tr>
+<td><%=vo.getDetail_no() %></td>
+<td><%=vo.getQuestion_q() %></td>
+<td><%=vo.getQuestion_a() %></td>
+<td><%=vo.getQuestion_date() %></td>
+</tr>       
+<% 
+  }
+}
+}
+%>
+</table>
+<br><hr><br>
+
+<h2>일반 대화방</h2>
+<table border='1'>
+<tr><th>대화방 번호</th><th>발신자</th><th>송신자</th><th class='content'>내용</th><th>읽은 날짜</th></tr>
+<% 
+int cnt=0;
+if(msList!=null&&msList.size()!=0){
+ for(List<MessegeVO> v2:msList){
+%>	 
+
+	 
+<% 
+for(MessegeVO vo:v2){
+	if(cnt==0){
+%>
+<tr>
+<td><%= vo.getMessage_room_no()%></td>
+<td><%=vo.getMem_id()%></td>
+<td><%=vo.getMem_id2() %></td>
+<td class='content'><%=vo.getContent() %></td>
+<td><%=vo.getRead_date() %></td>
+</tr>
+       
+<%
+	}
+	cnt++;
+}
+ cnt=0;
+  }
+}
+%>
+</table>
+
+<table>
+<tr><td class='content'>아놔!!!</td></tr>
+
+</table>
+
+
+
+</body>
+</html>

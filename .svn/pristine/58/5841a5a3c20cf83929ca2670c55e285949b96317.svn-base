@@ -1,0 +1,204 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LOOK UP</title>
+<script src="../js/jquery-3.6.0.min.js"></script>
+
+
+<link rel="stylesheet" href="../css/board.css">
+<link rel="stylesheet" href="../css/typing.css">
+<link rel="stylesheet" href="../css/btn.css">
+
+<style>
+
+
+.mainContent{
+	position: fixed;
+	overflow: auto;
+}
+
+.titleUl{
+	border : 3px dotted gray;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: space-evenly;
+	
+	width: 90%;
+ 	height: 200px;
+ 	position: absolute;
+}
+
+
+.subTitle{
+	margin-left: 50px;
+	margin-top: 40px;
+	padding: 5px;	
+	
+}
+.titleBox{
+	width: 80%;
+	height: 200px;
+	margin: 40px;
+		
+	padding: 10px;
+}
+
+
+.middleBox{
+	display: flex;
+	margin: 20px 50px 1px 50px;
+	
+	justify-content: space-between;
+	width: 91%;		 
+	height: 40px;
+}
+.midsearch{
+	padding-top: 3px;
+	margin-right: 40px;
+	margin-top: 20px;	
+}
+.midSpan{
+	margin-left: 40px;
+}
+.midHr{ 
+	margin-right: 120px;
+
+} 
+
+
+table.type04 {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: left;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  margin : 20px 10px;
+  margin-left: 60px;  
+  width: 90%;
+  text-align: center;
+}
+table.type04 th {
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc; 
+}
+table.type04 td {
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  
+}
+table.tableNum1{
+	width: 3%;
+}
+table.tableNum2{
+	width: 50%;
+}
+table.tableNum3{
+	width: 15%;
+}
+table.tableNum4{
+	width: 15%;
+}
+table.tableNum5{
+	width: 15%;
+	
+}
+
+</style>
+</head>
+<body>
+<!-- 상단메뉴 -->
+	<header>
+	<nav>
+			<div id="topMenu" class="FF">
+				<div class="title">
+					<a href="../main/main.jsp">
+						<img class="titleImg" alt="메인배너R.png" src="../images/메인배너R.png">
+					</a>
+				</div>
+               <%
+               if(session.getAttribute("loginMember")==null){
+               %>
+				<div class="dropdown FF topText">
+					<a href="#" class="join">JOIN</a>
+				</div>
+              <% 
+               }else{
+              %>
+              	<div class="dropdown FF topText">
+					<a href="#" class="join">LOGOUT</a>
+				</div>
+             <% 
+             }
+               %>
+				<div class="dropdown FF topText">
+				<%if(session.getAttribute("loginMember")==null){ 
+				%>
+					<a href="#" class="login">LOGIN</a>
+					<% 
+				}else{
+					%>
+				<a href="#" class="login">MYPAGE</a>
+				<% 
+				}
+				%>
+				
+				</div>
+
+				<div class="search">
+					<input type="text" placeholder="검색어 입력"> 
+					<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				</div>
+
+				<div class="dropdown FF ">
+					<button id="notice" class="dropbtn FF ahover">
+						<span class="dropbtn_icon"></span> 공지사항
+					</button>
+					<div class="dropdown-content">
+						<a href="#">공지사항</a> 
+						<a href="#">자주 묻는 질문</a> 
+						<a href="#">1:1문의</a>
+					</div>
+				</div>
+
+				<div class="dropdown FF">
+					<button class="dropbtn FF ahover">
+						<span class="dropbtn_icon"></span> 게시판
+					</button>
+					<div class="dropdown-content">
+						<a href="board(관측게시판).html">관측게시판</a> 
+						<a href="board(자유게시판).html">자유게시판</a> 
+						<a href="board(관측회게시판).html">관측회게시판</a>
+					</div>
+				</div>
+
+			</div>
+	</nav>
+	</header>
+
+	<aside>
+
+		<ul>
+			<li><a href="board(게시판).html">게시판</a></li>
+			<li><a class="home" href="board(관측게시판).html">관측게시판</a></li>
+			<li><a href="board(자유게시판).html">자유게시판</a></li>
+			<li><a href="board(관측회게시판).html">관측회게시판</a></li>
+		</ul>
+
+
+	</aside>
+	
+	<section>
+	   <iframe name="mainContent" class="mainContent"  src="../schedule/calendar.jsp">
+	   
+	   </iframe>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+package kr.or.ddit.schedule.service;
+
+import java.util.List;
+
+import kr.or.ddit.schedule.vo.ScheVO;
+
+
+public interface IScheduleService {
+	
+	public String insertSchedule(ScheVO vo);
+	
+	public List<ScheVO> allSchedule();
+	
+	public int deleteSchedule(ScheVO vo);
+	
+	public int updateSchedule(ScheVO vo);
+}

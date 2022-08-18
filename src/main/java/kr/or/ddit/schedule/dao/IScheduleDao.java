@@ -1,0 +1,33 @@
+package kr.or.ddit.schedule.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import com.ibatis.sqlmap.client.SqlMapException;
+
+import kr.or.ddit.schedule.vo.ScheVO;
+
+
+public interface IScheduleDao {
+	
+	public String insertSchedule(ScheVO vo) throws SQLException;
+	
+	public List<ScheVO> allSchedule() throws SQLException;
+	
+	public int deleteSchedule(ScheVO vo) throws SQLException;
+	
+	public int updateSchedule(ScheVO vo) throws SQLException;
+	
+	public List<ScheVO> allMemSchedule(ScheVO vo) throws SQLException;
+	
+	public String addMemSchedule(ScheVO vo) throws SQLException;
+	
+	public String insertMemSchedule(ScheVO vo) throws SQLException;
+	
+	public String insertMemSchedule2(ScheVO vo) throws SQLException;
+	
+	public int deleteMemSchedule(ScheVO vo) throws SQLException;
+	
+	public int updateMemSchedule(ScheVO vo) throws SQLException;
+}

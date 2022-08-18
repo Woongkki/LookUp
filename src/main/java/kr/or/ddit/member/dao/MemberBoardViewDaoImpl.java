@@ -1,0 +1,89 @@
+package kr.or.ddit.member.dao;
+
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.ibatis.config.SqlMapClientFactory;
+import kr.or.ddit.member.vo.RcBoardViewVO;
+import kr.or.ddit.member.vo.RcBoardViewVO2;
+import kr.or.ddit.member.vo.RecentSearchVO;
+import kr.or.ddit.member.vo.RecentSearchVO2;
+
+public class MemberBoardViewDaoImpl implements IMemberBoardViewDao{
+	private static IMemberBoardViewDao dao;
+	private SqlMapClient smc;
+	private MemberBoardViewDaoImpl() {
+		smc=SqlMapClientFactory.getSqlMapClient();
+	}
+	public static IMemberBoardViewDao getInstance() {
+		if(dao==null)dao=new MemberBoardViewDaoImpl();
+		return dao;
+	}
+	@Override
+	public List<RecentSearchVO> freeboardDate(String memid) throws SQLException {
+		// TODO Auto-generated method stub
+		return smc.queryForList("boardSearch.freeboardDate",memid);
+	}
+	@Override
+	public List<RecentSearchVO> objectboardDate(String memid) throws SQLException {
+		// TODO Auto-generated method stub
+		return smc.queryForList("boardSearch.objectboardDate",memid);
+	}
+	@Override
+	public List<RecentSearchVO> obboardDate(String memid) throws SQLException {
+		
+		return smc.queryForList("boardSearch.obboardDate",memid);
+	}
+	@Override
+	public String search(String s) throws SQLException {
+		
+		   
+		return (String)smc.queryForObject("boardSearch.search",s);
+		
+	}
+	@Override
+	public RcBoardViewVO fboard(Map<String, String> para) throws SQLException {
+		
+		return (RcBoardViewVO)smc.queryForObject("boardSearch.fboard",para);
+	}
+	@Override
+	public RcBoardViewVO objboard(Map<String, String> para) throws SQLException {
+		// TODO Auto-generated method stub
+		return (RcBoardViewVO)smc.queryForObject("boardSearch.objboard",para);
+	}
+	@Override
+	public RcBoardViewVO obboard(Map<String, String> para) throws SQLException {
+		System.out.println("여기가 문제 고로 파라미터 잘못!!");
+		return (RcBoardViewVO)smc.queryForObject("boardSearch.obboard",para);
+	}
+	@Override
+	public List<RecentSearchVO2> freecommentdDate(String id) throws SQLException {
+		
+		return smc.queryForList("boardSearch.freecommentdDate",id);
+	}
+	@Override
+	public List<RecentSearchVO2> objectcommentDate(String id) throws SQLException {
+		// TODO Auto-generated method stub
+		return smc.queryForList("boardSearch.objectcommentDate",id);
+	}
+	@Override
+	public RcBoardViewVO2 fcboard(Map<String, String> para) throws SQLException {
+		// TODO Auto-generated method stub
+		return (RcBoardViewVO2)smc.queryForObject("boardSearch.fcboard",para);
+	}
+	@Override
+	public RcBoardViewVO2 objcboard(Map<String, String> para) throws SQLException {
+		// TODO Auto-generated method stub
+		return (RcBoardViewVO2)smc.queryForObject("boardSearch.objcboard",para);
+	}
+	
+	
+	
+	
+
+
+}

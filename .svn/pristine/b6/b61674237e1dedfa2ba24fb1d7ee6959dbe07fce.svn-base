@@ -1,0 +1,33 @@
+package kr.or.ddit.service;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.ddit.dao.IMemberDao;
+import kr.or.ddit.dao.IObserveDao;
+import kr.or.ddit.dao.MemberDaoImpl;
+import kr.or.ddit.dao.ObserveDaoImpl;
+import kr.or.ddit.vo.ObserveVO;
+
+public class ObserveServiceImpl implements IObserveService{
+	private static IObserveService service;
+	private IObserveDao dao;
+	private ObserveServiceImpl() {
+		dao=ObserveDaoImpl.getInstance();
+	}
+	public static IObserveService getInstance() {
+		if(service==null)service=new ObserveServiceImpl();
+		return service;
+	}
+	@Override
+	public List<ObserveVO> oblist(String id) {
+		List<ObserveVO>list=null;
+		try {
+			list=dao.oblist(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+}

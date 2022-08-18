@@ -1,0 +1,44 @@
+package kr.or.ddit.qna.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.or.ddit.qna.service.IQnaService;
+import kr.or.ddit.qna.service.QnaServiceImpl;
+import kr.or.ddit.qna.vo.QnaVO;
+
+
+@WebServlet("/qnaUpdateForm.do")
+public class QnaUpdateForm extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+		
+		IQnaService service = QnaServiceImpl.getInstance();
+		QnaVO qnaVo = service.qnaDetail(qna_no);
+		request.setAttribute("qnaVo", qnaVo);
+		
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginMember")==null) {
+			request.getRequestDispatcher("/selectQnaList.do").forward(request, response);
+		}else {
+			request.getRequestDispatcher("qna/qnaUpdateForm.jsp").forward(request, response);
+		}
+		
+		//request.getRequestDispatcher("qna/qnaUpdateForm.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

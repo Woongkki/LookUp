@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>대화방 관리
+<body>
+<a href='memberdetail.jsp'>회원정보 조회</a>
+<a href='../mycontentcheck/mycontentview.jsp'>내가 쓴글 보기</a>
+<!-- <a href='adminInquery.jsp'>관리자에게 문의</a> -->
+<a href='<%= request.getContextPath()%>/MessageRoomList.do'>메세지</a>
+<%-- <a href='<%= request.getContextPath()%>/MessageRoomList.do'>대화방</a> --%>
+<a href='<%= request.getContextPath()%>/BlockMember.do'>차단한 사용자 관리</a>
+<a href='<%= request.getContextPath()%>/ObserveCheck.do'>관측회 신청 현황</a>
+<a href='<%= request.getContextPath()%>/LikeSchedule.do'>관심 일정 관리</a>
+<a href='<%= request.getContextPath()%>/LikeSchedule.do'>다른 회원 프로필 보기</a>
+</body>
+</html>

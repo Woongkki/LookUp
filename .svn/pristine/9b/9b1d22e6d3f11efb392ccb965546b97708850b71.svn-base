@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="observers">
+	<!-- 관측회 생성하기 -->
+	<insert id="insertOb" parameterClass="ObserversVO">
+		insert into observers 
+		values(#ob_num#,#ob_start#,#ob_end#,#ob_position#)	
+	</insert>
+	
+	<!-- 전체 목록 불러오기 -->
+	<select id="selectOb" resultClass="ObserversVO">
+		select * from observers order by ob_start desc
+	</select>
+	
+	
+</sqlMap>

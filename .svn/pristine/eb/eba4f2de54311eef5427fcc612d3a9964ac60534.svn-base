@@ -1,0 +1,58 @@
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+	$('.btn').on('click',function(){
+	    canceleid=$(this).attr('id');
+		
+		$.ajax({
+			url:'<%=request.getContextPath()%>/BlockCancele.do',
+			type:'get',
+			data:{"id":canceleid},
+			success:function(res){
+				if(res=="false"){
+					alert("취소 실패")
+				}else{
+					alert("취소 성공!!")
+				}
+			},
+			error:function(xhr){
+				alert("상태 : "+xhr.status);
+			},
+			dataType:'json'
+			
+		})
+		  location.href='<%=request.getContextPath()%>/BlockMember.do';
+	})
+})
+
+
+</script>
+
+
+</head>
+<body>
+<%List<String>blacklist=(List<String>)request.getAttribute("blacklist"); %>
+
+
+<table><tr><td>차단된 아이디</td><td></td>
+<% 
+for(String s:blacklist){
+%>
+  <tr><td><%=s %></td><td><input type='button' value='차단 취소' class='btn' id='<%=s%>'></td></tr>  
+
+<% 
+}
+%>
+
+
+</table>
+</body>
+</html>

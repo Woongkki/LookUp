@@ -1,0 +1,98 @@
+package kr.or.ddit.member.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+
+import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.member.vo.MemberVO;
+
+/**
+ * Servlet implementation class Login
+ */
+@WebServlet("/Login.do")
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       request.setCharacterEncoding("utf-8");
+	       
+	       //사용자가 입력한 id와 password를파라미터로 받는다.
+	       String memid=request.getParameter("memid");
+	       String mempass=request.getParameter("mempass");
+	    //   System.out.println(memid);
+	       //파라미터로 받은 데이터를 vo객체에 저장한다
+	       MemberVO vo=new MemberVO();
+	       vo.setMem_id(memid);
+	       vo.setMem_pass(mempass);
+	       Map<String,String>para=new HashMap<>();
+	       para.put("mem_id", memid);
+	       para.put("mem_pass", mempass);
+	       //DB처리를 위한 Dao객체 생성
+	       IMemberService sv=MemberServiceImpl.getInstance();
+	       String status=sv.memStatus(memid);
+	       //DB처리를수정하고 결과를 받아서 VO객체에 저장한다.
+	    //   MemberVO loginMemberVo=sv.memberIdSearch(memid);
+	       MemberVO loginMemberVo=sv.login(para);
+	     //  System.out.println(loginMemberVo);
+	       HttpSession session=request.getSession();
+	       //로그인 성공 여부 확인
+	       if(loginMemberVo!=null&&!status.equals("F")&&!status.equals("B")) {//로그인 성공시
+	    	   
+	    	   //session객체 생성
+	    	//   HttpSession session=request.getSession();
+	    	   
+	    	   //session에 로그인 성공 VO객체를 저장한다. 
+	    	   SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+                Date n=new Date();
+                String start=sdf1.format(n);
+              session.setAttribute("start",start);
+	    	   
+	    	   
+	    	   
+	    	   session.setAttribute("loginMember", loginMemberVo);   
+	       }
+	       session.setAttribute("status",status);
+	       System.out.println(status);
+	       response.sendRedirect(request.getContextPath()+"/main/main.jsp");
+	     
+		}
+	
+		
+//	   if(sv.logidCheck(id)==0) {
+//		   request.setAttribute("logo","아이디가 일치 하지 않는다.!");
+//			 request.getRequestDispatcher("로그인/login.jsp").forward(request, response);
+//	   }
+//		
+		
+//		int cnt=0;
+//		cnt=sv.memlogin(mp);
+//		if(cnt==0) {
+//			request.setAttribute("logo","아이디 또는 비밀 번호가 일치 하지않는다");
+//			 request.getRequestDispatcher("로그인/login.jsp").forward(request, response);
+//			 
+//		}
+//		else {
+//			 request.getRequestDispatcher("").forward(request, response);
+//		}
+		
+		
+	}
+
+

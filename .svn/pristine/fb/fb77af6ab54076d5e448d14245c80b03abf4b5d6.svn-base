@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="member">
+
+<select id="memberIdCheck" resultClass='int' parameterClass='string'>
+SELECT count(*)FROM MEMBER where MEM_ID=#data#
+</select>
+
+<insert id='insertMember' parameterClass='memberVO'>
+insert into member(
+mem_id,
+mem_addr1,
+mem_pass,
+mem_join,
+mem_nickname,
+mem_gender,
+mem_birth,
+mem_addr2,
+mem_addr3,
+mem_tel,
+status,
+mem_photo
+) values(#mem_id#,#mem_addr1#,#mem_pass#,sysdate,#mem_nickname#,#mem_gender#,#mem_birth#,#mem_addr2#,#mem_addr3#,$mem_tel$,'N',#mem_photo#)
+
+</insert>
+
+<select id='memlogin' parameterClass='map' resultClass='int'>
+select count(*) from member
+   where mem_id=#mem_id#
+   and mem_pass=#mem_pass#
+</select>
+
+<select id='logidCheck' parameterClass='string' resultClass='int'>
+select count(*) from member
+  where mem_id=#mem_id#
+</select>
+
+
+<select id='memberIdSearch' parameterClass='string' resultClass='memberVO'>
+select *from member where mem_id=#data#
+
+</select>
+
+
+<select id='memStatus' parameterClass='string' resultClass='string'>
+select status from member where mem_id=#data#
+
+</select>
+
+<update id='updateMember' parameterClass='memberVO'>
+update member set 
+   mem_addr1=#mem_addr1#,
+   mem_pass=#mem_pass#,
+   mem_nickname=#mem_nickname#,
+   mem_addr2=#mem_addr2#,
+   mem_addr3=#mem_addr3#,
+   mem_tel=#mem_tel#,
+   mem_photo=#mem_photo#,
+   mem_name=#mem_name#
+  where mem_id=#mem_id#
+
+
+
+</update>
+
+<insert id='nomalinsertMember' parameterClass='string'>
+insert into nomal_mem(mem_id) values(#data#)
+
+</insert>
+
+<insert id='loginlogCreate' parameterClass='map'>
+insert into LOGINLOG(log_no,mem_id,login_date) values(log_no_seq.nextval,#mem_id#,$time$)
+
+</insert>
+
+<update id='memStatusBUpdate' parameterClass='string'>
+update member set
+    status='B' 
+    where mem_id=#data#
+
+</update>
+
+
+<select id="login" resultClass='memberVO' parameterClass='map'>
+select*from member
+  where mem_id=#mem_id#
+    and mem_pass=#mem_pass#
+
+</select>
+
+
+
+
+
+
+</sqlMap>

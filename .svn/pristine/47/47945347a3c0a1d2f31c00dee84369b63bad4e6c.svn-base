@@ -1,0 +1,500 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LOOKUP</title>
+
+<link rel="shortcut icon" href="../images/별.png" type="image/x-icon">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/gif.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+<!-- <script type="text/javascript" src="../js/submain_bg.js"></script> -->
+<!-- <script type="text/javascript" src="../js/submain_bg_common.js"></script> -->
+
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/typing.css">
+<link rel="stylesheet" href="../css/btn.css">
+
+<script type="text/javascript">
+
+var idArray = new Array();
+	idArray[0] = "img1";
+	idArray[1] = "img2";
+	idArray[2] = "img3";
+	idArray[3] = "img4";
+
+	imgNum1 = 0;
+	imgNum2 = 1;
+$(function(){
+
+	// 처음 시작할때 줌 효과 주기
+	$(document).ready(function(){
+		$('.img1').css('transform', 'scale(1.0, 1.0)')
+	    	      .css('transition', '8.0s');
+	})	
+	
+	// 배경 화면 출력
+	setInterval(function(){
+		
+		// 일정 시간마다 배경 in
+		$('.'+ idArray[imgNum2] +'').fadeToggle(8000)
+								    .css('transform', 'scale(1.0, 1.0)')
+								    .css('transition', '8.0s');
+// 		console.log("1번 배열 : " + imgNum2);
+		if(imgNum2 == (idArray.length - 1)) imgNum2 = -1;
+		imgNum2++;
+	 
+		// 일정 시간마다 배경 out
+		$('.'+ idArray[imgNum1] +'').fadeToggle(100)
+									.css('transform', 'scale(1.3, 1.3)')
+	    							.css('transition', '8.0s');
+// 		console.log("2번 배열 : " + imgNum1);
+		if(imgNum1 == (idArray.length - 1)) imgNum1 = -1;
+		imgNum1++;
+		
+	}, 10000);
+	
+	locate = null;
+	$('#lsearch').on('click',function(){
+		locate = $('#location2').val();
+	
+// 	alert(location!=http://localhost/Practice/example/main.jsp);
+	if(locate!=null&&locate.trim().length!=0){
+	$.getJSON(
+			'https://api.openweathermap.org/data/2.5/weather?q='+ locate.trim() +'&appid=580daad484d16b5e8d65aa7a6442d9c4&units=metric',
+			function(res){
+				var temper = res.main.temp;
+				
+				console.log(temper);
+				$('.ctemp').html("온도 : "+ temper + "도");
+				var wiconUrl = '<img class="weatherIcon" src="http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@4x.png" alt="'+ res.weather[0].description +'">'
+				$('.icon').html(wiconUrl);
+				
+				var ct = res.dt; // 현재시각을 나타내는 숫자 '1650447186'의 형태
+				var srTime = res.sys.sunrise;
+				var ssTime = res.sys.sunset;
+				
+				function dateFormat(date) {
+					  var od = new Date(date*1000);
+				      let month = od.getMonth() + 1;
+				      let day = od.getDate();
+
+				      month = month >= 10 ? month : '0' + month;
+				      day = day >= 10 ? day : '0' + day;
+
+				      return '날짜 : ' + od.getFullYear() + '년' + month + '월' + day + "일";// + ' ' + hour + ':' + minute + ':' + second;
+				}  
+				
+				function convertTime(t){
+					var ot = new Date(t*1000); // Wed Apr 20 2022 18:33:06 GMT+0900 (한국 표준시)의 형태
+				      let hour = ot.getHours();
+				      let minute = ot.getMinutes();
+				      let second = ot.getSeconds();
+
+				      hour = hour >= 10 ? hour : '0' + hour;
+				      minute = minute >= 10 ? minute : '0' + minute;
+
+				      return '시간 : ' + hour + '시' + minute + "분";
+				}
+				
+				var currentTime = convertTime(ct);
+				$('.time').html(currentTime);
+				
+				var sunriseTime = convertTime(srTime);
+				$('.sunrise').html("일출" + sunriseTime);
+				
+				var sunsetTime = convertTime(ssTime);
+				$('.sunset').html("일몰" + sunsetTime);
+				
+				var currentDate = dateFormat(ct);
+				$('.date').html(currentDate);
+				
+				$('.locate').html(locate + "의 날씨 정보");
+	    });
+	   }
+	})
+	
+})
+
+	
+// 줌 관련 css
+//.css('transform', 'scale(0.7, 0.7)')
+//	  .css('transition', '3.0s');
+	
+	
+</script>
+
+<style>
+html {
+	background: url(images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.img1 {
+	background-image: url(../images/최종배경1.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform: scale(1.3, 1.3);
+}
+
+.img2 {
+	background-image: url(../images/최종배경2.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform: scale(1.3, 1.3);
+}
+
+.img3 {
+	background-image: url(../images/최종배경3.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform: scale(1.3, 1.3);
+}
+
+.img4 {
+	background-image: url(../images/최종배경4.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform: scale(1.3, 1.3);
+}
+
+#vr {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+}
+
+/* 모달 */
+
+.modal-content {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 500px;
+    height: 800px;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 1.3rem;
+    outline: 0;
+}
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: black;
+}
+
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    text-align: center;
+    color: black;
+}
+
+.moContent{
+    display: block;
+    position: inherit;
+    top: 40%;
+}
+
+.moContent3{
+	margin: 100px;
+}
+
+  	
+ /* 모달버튼 */
+ .moBtn{
+ 	background-color: white;
+    color: black;
+    margin: 10px;
+    border-radius: 7px;
+    border: 2px solid #69A8AA;
+    
+ 	
+ }
+  	
+ .modal-header{
+ 	display: block;
+ }
+  	
+ .photo {
+	width: 400px;
+	height: auto;
+	border-radius: 10px;
+    border: 2px solid #69A8AA;
+	margin: 15px 30px 30px 0px;
+	padding: 2px;
+}
+
+hr {
+ background-color: white;
+}
+
+.weatherIcon{
+	padding-bottom : 150px;
+	padding-right : 50px;
+	width: 400px;
+	height: 450px;
+}
+</style>
+
+</head>
+<body >
+
+	
+	<!-- 움직이는 배경 -->
+	<div id="vr" class="vr_main">
+		<div class="img1"></div>
+		<div class="img2"></div>
+		<div class="img3"></div>
+		<div class="img4"></div>
+	</div>
+	
+	
+<!-- 상단메뉴 -->
+
+	<header>
+	<nav>
+		<div id="topMenu" class="FF">
+		
+			<div class="title">
+				<a href="../main/main.html">
+				<img class="titleImg" alt="메인배너R.png" src="../images/메인배너R.png">
+				</a>
+			</div>
+			
+			<div class="dropdown FF topText">
+				<a href="#" class="join">JOIN</a>		
+			</div>
+			
+			<div class="dropdown FF topText">
+				<a href="../login/login.jsp" class="login">LOGIN</a>
+			</div>
+			
+			
+			<div class="search">
+				<input type="text" placeholder="검색어 입력"> 
+				<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+			</div>
+			
+			
+			
+			<div class="dropdown FF " >
+				<button id="notice" class="dropbtn FF ahover">
+					<span class="dropbtn_icon"></span> 
+					공지사항
+				</button>
+				<div class="dropdown-content">
+					<a href="#">공지사항</a> 
+					<a href="#">자주 묻는 질문</a> 
+					<a href="#">1:1문의</a>
+				</div>
+			</div>
+
+			<div class="dropdown FF">
+				<button class="dropbtn FF ahover">
+					<span class="dropbtn_icon"></span> 
+					게시판
+				</button>
+				<div class="dropdown-content">
+					<a href="../example/board.html">관측게시판</a> 
+					<a href="#">자유게시판</a> 
+					<a href="#">관측회게시판</a>
+				</div>
+			</div>
+		</div>
+		</nav>
+	</header>
+	
+
+	<!-- 타이핑글자 -->
+		<div class="FF typing">
+			<h1>달과 우주를 관측하고 오늘의 천문현상정보를 제공합니다</h1>
+		</div>
+
+
+	<!-- 본문 -->
+	<div id="content" class="FF">
+		<div class="mainCon oneContent">
+		
+<!-- 		<img class="imgOne" src="../js/images/우주.png" alt=""> -->
+		
+		<div class="imgContent">
+			<img class="imgAll" alt="우주.png" src="../images/우주.png">
+		</div>
+
+			<div class="oneText">
+<!-- 			<img alt="캡처.PNG" src="../images/캡처.PNG" class="oneHover"> -->
+				<h2>천문현상</h2>
+				<p class="conText FR">
+					월별로 정리된 천문현상을<br>
+					확인할 수 있습니다.
+				</p>				
+			</div>
+			
+			<!-- 버튼 -->
+			<div>
+			<a class="btnMain btn1 FF" href="<%=request.getContextPath()%>/schedule/Schedule.jsp">천문현상바로가기</a>
+			</div>
+			
+		</div>
+
+		<div class="mainCon twoContent">
+		
+		<div class="imgContent">
+			<img class="imgAll" alt="우주3.png" src="../images/우주3.png">
+		</div>
+		
+			<div class="twoText">
+<!-- 			<img alt="캡처2.PNG" src="../images/캡처2.PNG" class="twoHover"> -->
+				<h2>관측정보</h2>
+				<p class="conText FR">
+				현재 위치를 기반으로 관측 보조<br>
+				정보를 확인할 수 있습니다.
+				</p>
+			</div>
+			
+			<!-- 버튼 -->
+			<div>
+				<a class="btnMain btn2 FF" href="#" data-toggle="modal" data-target="#myModal">관측정보바로가기</a>
+			</div>
+
+
+			<!-- Modal -->
+				<div class="modal fade" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<!-- 모달 상단 -->
+						<div class="modal-header">
+							<h4 class="modal-title">LOOK UP</h4>
+							<!--           <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+						</div>
+
+						<!-- 모달 내용 -->
+						<div class="modal-body">
+
+							<div class="icon"> </div>
+							
+							
+							<div class="moContent">
+								
+								<h3 class="locate"></h3>
+								<h3 class="date">위치를 입력해주세요!</h3>
+								<h3 class="time">꼭 영어로 입력해주셔야해요!</h3>
+								<h3 class="ctemp"></h3>
+								<h3 class="sunrise"></h3>
+								<h3 class="sunset"></h3>
+							</div>
+						</div>
+
+						<!-- 모달 하단 -->
+						<div class="modal-footer">
+							<div class="changeLocation" style="width:250px;">
+								<input id="location2" type="text" placeholder="ex) Seoul, Daejeon">
+							</div>
+							
+							<button type="button" class="moBtn moChange" id='lsearch'>위치변경</button>
+							<button type="button" class="moBtn moClose" data-dismiss="modal">닫기</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="mainCon threeContent">
+		
+		<div class="imgContent">
+			<img class="imgAll" alt="우주2.png" src="../images/우주2.png">
+		</div>
+		
+			<div class="threeText">
+<!-- 			<img alt="캡처3.PNG" src="../images/캡처3.PNG" class="threeHover"> -->
+				<h2>천문대정보</h2>
+				<p class="conText FR">
+				내 주변 천문대 정보를<br>
+				지도를 통해 확인합니다.
+				
+				</p>
+			</div>
+			
+			<!-- 버튼 -->
+			<div>
+			<a class="btnMain btn3 FF" href="../map/Map.jsp">천문대바로가기</a>
+			</div>
+		</div>
+
+		<div class="mainCon fourContent">
+		
+		<div class="imgContent">
+			<img class="imgAll" alt="우주4.png" src="../images/우주4.png">
+		</div>
+		
+			<div class="fourText">
+<!-- 			<img alt="캡처4.PNG" src="../images/캡처4.PNG" class="fourHover"> -->
+				<h2>관측회</h2>
+				<p class="conText FR">
+				LOOKUP에서 진행하는<br>
+				관측회에 참가할 수 있습니다.
+				</p>
+			</div>
+			
+			<!-- 버튼 -->
+			<div>
+			<a class="btnMain btn4 FF" href="#">관측회바로가기</a>
+			</div>
+			
+		</div>
+	</div>
+			
+	<!-- 하단 -->
+	<div id="footer" class="FR">
+		<hr>
+		(34055) 대전광역시 유성구 대덕대로 776     전화: 080-373-3333(무료) / 042-865-3333(유료)     천문정보 ARS: 042-865-3332     팩스: 042-861-5610<br>
+		Copyright (C) 2017 Korea Astronomy and Space Science Institute. All Rights Reserved.
+	</div>
+
+</body>
+</html>

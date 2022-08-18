@@ -1,0 +1,276 @@
+<%@page import="kr.or.ddit.member.vo.MemberVO"%>
+<%@page import="kr.or.ddit.qna.vo.QnaVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LOOK UP</title>
+
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/typing.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/btn.css">
+
+<style>
+.mainContent{
+	position: fixed;
+	overflow: auto;
+	border : 1px solid gray;
+}
+.subTitle{
+	margin-left: 50px;
+	margin-top: 10px;
+	padding: 5px;	
+}
+
+#footer{
+    position: fixed;
+    bottom: 0;
+    clear: both;
+    width: 100%;
+    height: 80px;
+    color : black;
+    background-color: white;
+}
+
+#insertbutton{
+	margin-right: 120px;
+	margin-top : 10px;
+	overflow: hidden;
+	height: auto;
+}
+#insertbutton input{
+	width: 80px;
+	height: 40px;
+	float: right;
+	margin-right: 20px;
+	cursor:pointer;
+}
+button, textarea {
+    font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
+}
+
+/******************************************************************/
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 90%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  margin-left: 40px; 
+}
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+.active:after {
+  content: "\2212";
+}
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  margin-left: 40px;
+  width: 85%;
+}
+</style>
+
+<script type="text/javascript">
+	$(function(){
+		$("#btnAdd").on("click", function(){
+			location.href="<%=request.getContextPath()%>/qnaInsertForm.do";
+		})
+		
+		$(".btnUpdate").on("click", function(){
+			novalue = $("#qna_no").val().trim();
+			location.href = "<%=request.getContextPath()%>/qnaUpdateForm.do?qna_no=" + novalue;
+		})
+		
+		$(".btnDelete").on("click", function(){
+			novalue = $("#qna_no").val().trim();
+			location.href = "<%=request.getContextPath()%>/qnaDelete.do?qna_no=" + novalue;
+		})
+	})
+</script>
+
+</head>
+<body>
+
+<%
+	MemberVO admin=(MemberVO)session.getAttribute("loginMember"); 
+%>
+
+<!-- 상단메뉴 -->
+	<header>
+	<nav>
+		<div id="topMenu" class="FF">
+			<div class="title">
+				<a href="../example/main.html">
+					<img class="titleImg" alt="메인배너R.png" src="../images/메인배너R.png">
+				</a>
+			</div>
+
+			<%if(session.getAttribute("loginMember")==null){ 
+			%>
+				<div class="dropdown FF topText">
+				<a href="../memberjoin/memberForm.jsp" class="login">JOIN</a>	
+			</div>
+			<div class="dropdown FF topText">
+				<a href="../login/login.jsp" class="login">LOGIN</a>
+			</div>
+			<%
+			}else{
+			%>
+				<div class="dropdown FF topText">
+				<a href="<%=request.getContextPath()%>/Logout.do" class="join">LOGOUT</a>		
+			</div>
+			<div class="dropdown FF topText">
+				<a href="../membermypage/mypageMenu.jsp" class="login">마이페이지</a>
+			</div>
+			
+			<% 
+			}
+			%>
+
+			<div class="search">
+				<input type="text" placeholder="검색어 입력"> 
+				<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+			</div>
+
+			<div class="dropdown FF">
+				<button id="notice" class="dropbtn FF ahover">
+					<span class="dropbtn_icon"></span> 공지사항
+				</button>
+				<div class="dropdown-content">
+					<a href="<%=request.getContextPath() %>/selectNoticeList.do">공지사항</a> 
+					<a href="<%=request.getContextPath() %>/selectQnaList.do">자주 묻는 질문</a> 
+					<a href="<%=request.getContextPath() %>/question/questionList.jsp">1:1문의</a>
+				</div>
+			</div>
+
+			<div class="dropdown FF">
+				<button class="dropbtn FF ahover">
+					<span class="dropbtn_icon"></span> 게시판
+				</button>
+				<div class="dropdown-content">
+					<a href="board(관측게시판).html">관측게시판</a> 
+					<a href="board(자유게시판).html">자유게시판</a> 
+					<a href="board(관측회게시판).html">관측회게시판</a>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+	</header>
+
+	<aside>
+		<ul>
+			<li><a href="board(게시판).html">게시판</a></li>
+			<li><a class="home" href="board(관측게시판).html">관측게시판</a></li>
+			<li><a href="board(자유게시판).html">자유게시판</a></li>
+			<li><a href="board(관측회게시판).html">관측회게시판</a></li>
+		</ul>
+	</aside>
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
+<%
+	List<QnaVO> list = (List<QnaVO>)request.getAttribute("qnaList");
+%>
+	
+	<section>
+	
+		<div class="mainContent">
+			<div class="subTitle">
+				<h2> 자주묻는질문 </h2> <!-- 소 제목 -->
+			</div>
+
+<%
+	for(QnaVO vo : list){
+	%>
+	<button class="accordion"><%=vo.getTitle()%></button>
+	<div class="panel">
+	<div class="div" style="display: flex">
+		  <div class="date" style="width: 1100px;"><p><%=vo.getCreate_date()%></p></div>
+		  <input type="hidden" id="qna_no" name="qna_no" value="<%=vo.getQna_no()%>">
+		    <%
+				if(admin.getStatus().equals("M")){ 
+			%>
+		  <div id="insertbutton" class="insertBtn">
+			  <input class="btnUpdate" type="button" value="수정"> 
+			  <input class="btnDelete" type="button" value="삭제">
+		  </div>
+		    <%
+				}
+			%>
+	</div>
+	  
+	  <hr>
+	  <p><%=vo.getContent()%></p>
+	</div>
+	<%	
+	}
+%>
+
+<%
+	if(admin.getStatus().equals("M")){ 
+%>
+			<div id="insertbutton">
+				<input id="btnAdd" type="button" value="등록">
+			</div>
+<%
+	}
+%>			
+			
+        <br><br><br><br><br><br>
+        </div>
+        
+	</section>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  })
+}
+</script>	
+
+<!-- ------------------------------------------------------------------------------------------- -->
+	
+	<footer id="footer">
+ 	  <div id="footer" class="FR">
+    	<hr>
+        (34055) 대전광역시 유성구 대덕대로 776     전화: 080-373-3333(무료) / 042-865-3333(유료)     천문정보 ARS: 042-865-3332     팩스: 042-861-5610<br>
+        Copyright (C) 2017 Korea Astronomy and Space Science Institute. All Rights Reserved.
+      </div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+package kr.or.ddit.service;
+
+import java.util.List;
+import java.util.Map;
+
+public interface IBlockMemberService {
+
+	List<String> blacklist(String id);
+
+	int blockCancele(Map<String, String> para);
+
+}

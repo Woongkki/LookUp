@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap  namespace='free'>
+	
+	
+	<sql id="dynamicCondition">
+	      <dynamic prepend=" and">
+	      <isNotEmpty property='stype' prepend=" and">
+	      <isNotEmpty property="sword">
+	         $stype$ like '%'||#sword#||'%'
+	      </isNotEmpty> 
+	      </isNotEmpty>
+	      </dynamic>
+	</sql>
+	
+	<sql id="dynamicCondition2">
+	      <dynamic prepend=" where">
+	      <isNotEmpty property='stype' prepend=" and">
+	      <isNotEmpty property="sword">
+	         $stype$ like '%'||#sword#||'%'
+	      </isNotEmpty> 
+	      </isNotEmpty>
+	      </dynamic>
+	</sql>
+	
+	
+	
+	
+	<select id='totalCount' 
+	 parameterClass="map"
+	resultClass='int'>
+	  select count(*) from freeboard
+	   <include refid='dynamicCondition2'/> 
+	</select>
+	
+	
+	
+	<select id='selectList' resultClass='freeVO' parameterClass='map'>
+		   select A.* from (
+	    select rownum as rnum, B.*  from (
+	        select b.mem_name,a.title,a.CREATE_DATE,a.free_no,a.status 
+             from  freeboard a,member b
+	        where a.mem_id=b.mem_id
+	         and a.status='T'
+	          <include refid='dynamicCondition'/> 
+	         order by free_no desc) B
+	         <![CDATA[
+	     where rownum 	<=#end#) A 
+	    where A.rnum >=#start#
+		  ]]>
+	</select>
+	
+		
+	<select id='fdetail' resultClass="freeDtVO" parameterClass='string'>
+	select b.title,b.update_date,a.mem_name,b.content,b.create_date,a.mem_photo,b.free_no,a.mem_id
+      from member a,freeboard b
+        where a.mem_id=b.mem_id
+          and free_no=#data#
+          order by 5 desc
+	</select>
+	
+	
+	<select id='fbcount' resultClass='int' parameterClass='string'>
+	select count(*) from free_comment where free_no=#data#
+	</select>
+	
+	<select id='fcvlist' resultClass='frcVO' parameterClass='string'>
+	select
+       a.comment_no, 
+       a.free_no,    
+       b.mem_id,     
+       a.content,     
+       a.create_date, 
+       a.update_date, 
+       b.mem_photo  
+     from free_comment a,member b
+    where  a.mem_id=b.mem_id
+      and free_no=#data#
+       order by 5 desc
+	</select>
+	
+	<insert id='freecomentin' parameterClass='map'>
+	insert into free_comment(comment_no,free_no,mem_id,content, create_date)
+            values(freecoment_num_seq.nextval ,#free_no#,#mem_id#,#content#,sysdate)
+	
+	</insert>
+	
+	
+	<insert id='freecr' parameterClass='map'>
+	insert into freeboard
+	    (free_no,
+        mem_id,
+        title,
+        content,
+        create_date,
+        status)
+  values      
+	  (freeboard_num_seq.nextval,
+        #mem_id#,
+        #title#,
+        #content#,
+       sysdate,
+        'T') 
+	</insert>
+	
+	
+	
+	<insert id='fc2in' parameterClass='map'>
+	
+	insert into  free_comment
+	(comment_no,
+	free_no, 
+	mem_id, 
+	comment_no2, 
+	content, 
+	create_date)
+	values(
+	freecoment_num_seq.nextval,
+	#free_no#, 
+	#mem_id#,
+	#comment_no#, 
+	#content#, 
+	sysdate
+	)
+	</insert>
+	
+	
+<select id='fec2cnt' parameterClass='string' resultClass='int'>
+select count(*)
+  from free_comment
+   where comment_no2=#data#
+
+</select>	
+	
+<select id='fc2list' parameterClass='int' resultClass='frcVO2'>
+select
+      mem_id,
+     content,     
+     create_date,
+     update_date
+   from free_comment
+    where comment_no2=#data#  
+</select>	
+	
+	
+	
+	
+	
+	</sqlMap>

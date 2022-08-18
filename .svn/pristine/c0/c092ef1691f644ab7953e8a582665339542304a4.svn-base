@@ -1,0 +1,135 @@
+<%@page import="kr.or.ddit.member.vo.MemberVO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/logout.js"></script>
+<script  language="javascript">
+function closePage( event ){
+	 alert("??")
+    if( event.clientY < 0 ){
+    	
+    	  location.href='/lookupProject/Logout.do';
+    		 
+    }
+
+ }
+
+ document.onkeydown = function() {
+     // 새로고침 방지 ( Ctrl+R, Ctrl+N, F5 )
+     if ( event.ctrlKey == true && ( event.keyCode == 78 || event.keyCode == 82 ) || event.keyCode == 116) {
+          event.keyCode = 0;
+          event.cancelBubble = true;
+          event.returnValue = false;
+     }
+
+     // 창 닫기( Alt+F4 ) 방지 
+     if ( event.keyCode == 115) { // F4 눌렀을 시
+       // 로그아웃 처리
+    	 location.href='/lookupProject/Logout.do';
+     }
+
+     // 윈도우 창이 닫힐 경우
+     if (event.keyCode == 505) { 
+         alert(document.body.onBeforeUnload);
+    }
+}
+
+</script>
+</head>
+<body onbeforeunload="closePage(event)" oncontextmenu="return false">
+
+<%
+
+MemberVO loginMemberVo=(MemberVO)session.getAttribute("loginMember");
+String status=String.valueOf(session.getAttribute("status"));
+%>
+
+<% 
+    if(loginMemberVo==null){//로그인 관련 세션이 없을 때
+    	  if(status.equals("F")){
+%>
+	<form action="<%=request.getContextPath()%>/Login.do" method="get">
+
+		<h3>정지된 회원입니다 ㅠㅠ</h3>
+		<table border='1'>
+			<tr>
+				<td>ID :</td>
+				<td><input type='text' name="memid"></td>
+			</tr>
+
+			<tr>
+				<td>pass :</td>
+				<td><input type="password" name="mempass"></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" id="s"><input type="submit" value='Login'></td>
+			</tr>
+		</table>
+
+
+	</form>
+
+	<%
+	} else if (status.equals("B")) {
+	%>      
+
+
+     <h3>탈퇴한 회원입니다.</h3>
+
+	<form action="<%=request.getContextPath()%>/Login.do" method="get">
+		<table border='1'>
+			<tr>
+				<td>ID :</td>
+				<td><input type='text' name="memid"></td>
+			</tr>
+			<tr>
+				<td>pass :</td>
+				<td><input type="password" name="mempass"></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" id="s"><input type="submit" value='Login'></td>
+			</tr>
+		</table>
+	</form>
+	<%
+	} else {
+	%>
+	<form action="<%=request.getContextPath()%>/Login.do" method="get">
+		<table border='1'>
+			<tr>
+				<td>ID :</td>
+				<td><input type='text' name="memid"></td>
+			</tr>
+			<tr>
+				<td>pass :</td>
+				<td><input type="password" name="mempass"></td>
+			</tr>
+			<tr>
+				<td colspan="2" id="s"><input type="submit" value='Login'></td>
+			</tr>
+		</table>
+	</form>
+
+
+	<%
+	}
+	} else {
+	%>
+  <h3><%=loginMemberVo.getMem_id()%>님 반갑습니다.</h3>
+        <a href="../membermypage/mypageMenue.jsp">마이페이지</a>
+         <a href="">프로필</a>
+          <a href="">소식 알림게시판</a>
+           <a href="">관측 게시판</a>
+    	<a href="<%= request.getContextPath() %>/Logout.do">logout</a>
+<% 	   	   
+   }
+%>
+</body>
+</html>

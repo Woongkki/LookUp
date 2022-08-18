@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'EliceDigitalBaeum-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* login.jsp에서 사용 */
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* ---------------------------------------------------------- */
+
+/* 폰트 설정 */
+.FF{
+		font-family: 'EliceDigitalBaeum-Bd', sans-serif;/*웹 폰트 지정*/
+		color: white;
+}
+
+.FR{
+		font-family: 'EliceDigitalBaeum', sans-serif;/*웹 폰트 지정*/
+		color: white;
+}
+
+/* login.jsp에서 사용 */
+.FK{
+		font-family: 'GangwonEduPowerExtraBoldA', sans-serif;/*웹 폰트 지정*/
+		color: #46649b;
+}

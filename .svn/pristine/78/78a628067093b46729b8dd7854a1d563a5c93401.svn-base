@@ -1,0 +1,106 @@
+<%@page import="kr.or.ddit.member.vo.MemberVO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<style type="text/css">
+	table, tr, td { border:1px solid blue; border-collapse: collapse; }
+	td { padding:5px;}
+</style>
+
+<script type="text/javascript">
+$(function(){
+
+   $('#memupdate').on('submit',function(){
+	   name=$('#name').val().trim();
+	   pass=$('#pass').val().trim();
+	   nic=$('#nic').val().trim();
+	   addr1=$('#addr1').val().trim();
+	   addr2=$('#addr2').val().trim();
+	  addr3=$('#addr3').val().trim();
+	   tel=$('#tel').val().trim();
+	   if(name==""||pass==""||nic==""||addr1==""||addr2==""||addr3==""||tel==""){
+		   alert("입력하지 않은 정보가 존재합니다!!");
+		   return false;
+	   }
+   })
+
+	
+	
+	
+$('#aSearch').on('click',function(){
+	
+	  window.open("<%=request.getContextPath()%>/memberjoin/우편번호.html","우편번호","width=500 height=400");
+	  
+})	
+
+})
+
+
+</script>
+</head>
+<body>
+<%
+	MemberVO memVo =(MemberVO)session.getAttribute("loginMember");
+%>
+<h2>회원 정보 수정 폼</h2>
+<form action="<%=request.getContextPath()%>/MemberUpdate.do" method="post" enctype="multipart/form-data" id='memupdate'>
+	<input type="hidden" name="mem_id" value="<%=memVo.getMem_id()%>">
+	<input type="hidden" name="old_photo" value="<%=memVo.getMem_photo() %>">
+<table border="1">
+<tbody>
+	<tr>
+		<td colspan="2" style="text-align:center;"><img src="<%=request.getContextPath() %>/ImageServiceView.do?memID=<%=memVo.getMem_id() %>" width="200" height="140"></td>
+	</tr>
+	<tr>
+		<td>회원ID</td>
+		<td><%=memVo.getMem_id()%></td>
+	</tr>
+	<tr>
+		<td>비밀번호</td>
+		<td><input type="password" name="mem_pass" value="" id='pass'></td>
+	</tr>
+	<tr>
+		<td>회원이름</td>
+		<td><input type="text" name="mem_name" value="<%=memVo.getMem_name()%>" id='name'></td>
+	</tr>
+	<tr>
+		<td>닉네임</td>
+		<td><input type="text" name="mem_nickname" value="<%= memVo.getMem_nickname()%>" id='nic'></td>
+	</tr>
+	<tr>
+		<td>전화번호</td>
+		<td><input type="text" name="mem_tel" value="<%=memVo.getMem_tel()%>" id='tel'></td>
+	</tr>
+		<tr>
+		<td>우편주소</td>
+		<td><input type="text" name="mem_addr1" id='addr1' readonly="readonly" value='<%=memVo.getMem_addr1()%>'></td>
+		<td><input type="button" id='aSearch' value="우편번호 찾기" ></td>
+	</tr>
+	<tr>
+		<td>주소</td>
+		<td><input type="text" name="mem_addr2" id='addr2'readonly="readonly"value='<%=memVo.getMem_addr2()%>'></td>
+	</tr>
+		<tr>
+		<td>상세주소</td>
+		<td><input type="text" name="mem_addr3" id='addr3'value='<%=memVo.getMem_addr3()%>'></td>
+	</tr>
+	<tr>
+		<td>프로필 사진</td>
+		<td><input type="file" name="mem_photo"></td>
+	</tr>	
+	<tr>
+		<td colspan="2" style="text-align:center;">
+			<input type="submit" value="저장"> 
+			<input type="reset" value="취소"> 
+			</td>
+	</tr>
+</tbody>
+</table>
+</form>
+</body>
+</html>

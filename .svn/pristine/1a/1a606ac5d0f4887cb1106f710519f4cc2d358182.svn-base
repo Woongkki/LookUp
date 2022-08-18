@@ -1,0 +1,51 @@
+<%@page import="kr.or.ddit.member.vo.MemberVO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:'<%= request.getContextPath()%>/RecentView2.do',
+	    type:'get',
+	    success:function(res){
+	    	str="<table border='1'>";
+	    	str+="<tr><td>제목</td>";
+	    	str+="<td>내용</td>";
+	    	str+="<td>생성일</td>";
+	    	str+="<td>내용</td>";
+	    	str+="<td>생성일자</td>";
+	    	str+="<td colspan='2' style='text-align:center;'><img src='/lookupProject/ImageServiceView.do?memID=dsd'></td>"
+	    	
+	    	$.each(res,function(i,v){
+	    		str+="<tr><td>"+v.title+"</td>";
+	    		  str+="<td>"+v.content+"</td>";
+	    		  str+="<td>"+v.create_date+"</td></tr>";
+	    	})
+	    	str+="</table>"
+	    	$('body').html(str);
+	    	
+	    },
+	    error:function(xhr){
+	    	alert('상태 : '+xhr.status);
+	    },
+	    dataType:'json'
+	})
+})
+
+
+
+</script>
+</head>
+<body>
+<% MemberVO vo=(MemberVO)session.getAttribute("loginMember"); %>
+<input type="hidden" id="<%= vo.getMem_id() %>" name="<%= vo.getMem_id() %>">
+
+
+
+</body>
+</html>

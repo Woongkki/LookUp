@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap  namespace='boardSearch'>
+<select id='freeboardDate' parameterClass='string' resultClass='recentSearchVO'>
+    select free_no,CREATE_DATE,mem_id
+     from FREEBOARD
+       WHERE 
+    MEM_ID=#data#
+       <![CDATA[
+    and ROWNUM <=3 
+    order by 2 desc
+      ]]>
+
+</select>
+
+	
+<select id='objectboardDate' parameterClass='string' resultClass='recentSearchVO'>
+    select object_no,CREATE_DATE,mem_id
+     from OBJECTBOARD
+       WHERE 
+    MEM_ID=#data#
+      <![CDATA[
+    and ROWNUM <=3 
+    order by 2 desc
+   ]]>
+
+</select>
+
+	
+<select id='obboardDate' parameterClass='string' resultClass='recentSearchVO'>
+    select ob_no,CREATE_DATE,mem_id
+     from OB_BOARD
+       WHERE 
+    MEM_ID=#data#
+       <![CDATA[
+    and ROWNUM <=3 
+    order by 2 desc 
+   ]]>
+
+</select>
+
+
+<select id='freecommentdDate' parameterClass='string' resultClass='recentSearchVO2'>
+    select free_no,CREATE_DATE,mem_id,comment_no
+     from free_comment
+       WHERE 
+    MEM_ID=#data#
+       <![CDATA[
+    and ROWNUM <=3 
+    order by 2 desc
+      ]]>
+
+</select>
+
+<select id='objectcommentDate' parameterClass='string' resultClass='recentSearchVO2'>
+    select object_no,CREATE_DATE,mem_id,comment_no
+     from ob_comment
+       WHERE 
+    MEM_ID=#data#
+      <![CDATA[
+    and ROWNUM <=3 
+    order by 2 desc
+   ]]>
+
+</select>
+
+
+
+
+
+
+
+
+
+
+<select id='search' parameterClass='string' resultClass='string'>
+select OB_NO from OB_BOARD where CREATE_DATE=#data#
+
+
+</select>
+
+
+<select id='fboard' parameterClass='map' resultClass='recentViewVO'>
+select*from freeboard where mem_id=#mem_id#
+   and free_no=$num$
+</select>
+
+<select id='fcboard' parameterClass='map' resultClass='recentViewVO2'>
+select*from free_comment where mem_id=#mem_id#
+   and comment_no=$num$
+</select>
+
+
+
+<select id='objboard' parameterClass='map' resultClass='recentViewVO'>
+select*from objectboard where mem_id=#mem_id#
+   and object_no=$num$
+</select>
+
+<select id='objcboard' parameterClass='map' resultClass='recentViewVO2'>
+select*from ob_comment where mem_id=#mem_id#
+   and comment_no=$num$
+</select>
+
+
+<select id='obboard' parameterClass='map' resultClass='recentViewVO'>
+select*from ob_board where mem_id=#mem_id#
+   and ob_no=$num$
+</select>
+
+
+
+
+
+</sqlMap>	

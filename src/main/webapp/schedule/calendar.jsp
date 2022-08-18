@@ -1,0 +1,356 @@
+<%@page import="kr.or.ddit.member.vo.MemberVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+
+<style>
+  
+  body {
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    width: 1300px;
+    height : 800px;
+    margin: 40px auto;
+  }
+
+.fc-daygrid-day-frame:hover{  
+ 	background-color : lightgray; 
+} 
+
+.fc-event-time{   
+   display : none;
+}
+
+</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  <style>
+  .popper,
+  .tooltip {
+    position: absolute;
+    z-index: 9999;
+    background: #FFC107;
+    color: black;
+    width: 150px;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    padding: 10px;
+    text-align: center;
+  }
+  .style5 .tooltip {
+    background: #1E252B;
+    color: #FFFFFF;
+    max-width: 200px;
+    width: auto;
+    font-size: .8rem;
+    padding: .5em 1em;
+  }
+  .popper .popper__arrow,
+  .tooltip .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+  }
+
+  .tooltip .tooltip-arrow,
+  .popper .popper__arrow {
+    border-color: #FFC107;
+  }
+  .style5 .tooltip .tooltip-arrow {
+    border-color: #1E252B;
+  }
+  .popper[x-placement^="top"],
+  .tooltip[x-placement^="top"] {
+    margin-bottom: 5px;
+  }
+  .popper[x-placement^="top"] .popper__arrow,
+  .tooltip[x-placement^="top"] .tooltip-arrow {
+    border-width: 5px 5px 0 5px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    bottom: -5px;
+    left: calc(50% - 5px);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .popper[x-placement^="bottom"],
+  .tooltip[x-placement^="bottom"] {
+    margin-top: 5px;
+  }
+  .tooltip[x-placement^="bottom"] .tooltip-arrow,
+  .popper[x-placement^="bottom"] .popper__arrow {
+    border-width: 0 5px 5px 5px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    top: -5px;
+    left: calc(50% - 5px);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .tooltip[x-placement^="right"],
+  .popper[x-placement^="right"] {
+    margin-left: 5px;
+  }
+  .popper[x-placement^="right"] .popper__arrow,
+  .tooltip[x-placement^="right"] .tooltip-arrow {
+    border-width: 5px 5px 5px 0;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    left: -5px;
+    top: calc(50% - 5px);
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .popper[x-placement^="left"],
+  .tooltip[x-placement^="left"] {
+    margin-right: 5px;
+  }
+  .popper[x-placement^="left"] .popper__arrow,
+  .tooltip[x-placement^="left"] .tooltip-arrow {
+    border-width: 5px 0 5px 5px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    right: -5px;
+    top: calc(50% - 5px);
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  </style>
+  <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+  
+  
+<script>
+
+  title = null;
+  document.addEventListener('DOMContentLoaded', function() {
+	  power = $('#status1').val();
+	  memberId = $('#memId').val();
+	  newSchedule = {  };
+
+	  check = function(power){
+			if(power == 'M'|| power =='N'){
+	   		  return true;
+	    	 }else{
+	   		  return false;
+	   	  }
+		}
+	authority = check(power);
+	
+    var calendarEl = document.getElementById('calendar');
+
+   var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      initialDate: '2022-04-15', // 초기 로딩 날짜
+      locale: "ko",
+      navLinks: true,// can click day/week names to navigate views
+      selectable: authority,
+  
+      selectMirror: true,
+      select: function(arg) {
+    	  if(power =="M"){
+    	title = prompt('추가할 일정 제목 입력 :')
+    	if(!title){
+    		alert("일정을 입력해주세요!");
+    	}else if (title) { 
+    		content = prompt('일정의 내용 입력 :')
+        // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
+          calendar.addEvent({
+            title: title,
+            start: arg.start,
+            end: arg.end
+          })
+          calendar.on('dateClick', function(info) {
+          	$.ajax({
+          		url:'<%=request.getContextPath()%>/InsertSchedule.do',
+          		type:'post',
+          		data:{ "title" : title,
+          			   "content" : content,					
+      	    		   "date" : info.dateStr 
+      	    		   },
+      	   		success : function(res){
+      	   			alert("내용추가 완료");
+      	   			location.href = "../schedule/calendar.jsp";
+      	   		}, 
+          		dataType: 'json'
+          	})
+    		location.href = "../schedule/calendar.jsp";
+        	});
+        }
+        calendar.unselect()
+    	  }
+      },
+      
+      editable: true,
+      dayMaxEvents: true, // allow "more" link when too many events
+      eventDidMount: function(info) {
+          var tooltip = new Tooltip(info.el, {
+            title: info.event.extendedProps.description,
+            placement: 'top',
+            trigger: 'hover',
+            container: 'body'
+          });
+        },
+      events : printAll(), // DB에 저장된 일정을 달력에 추가.
+      eventClick: function(arg) { // 저장된 일정을 클릭했을때
+    	  if(authority){
+    	if(power == "M"){ // 관리자 일 경우
+    	var title = arg.event.title;
+    	var date = dateFormat(arg.event.start);
+    	var id = arg.event.id;
+    	  swal({
+    		  title : title + " 일정 수정/삭제",
+    		  buttons:["수정", "삭제"]
+    	  }).then((YES) => {
+    		  if(YES){
+    			  check = confirm("정말로 삭제하시겠습니까?");
+    			  if(check){
+    				  alert("삭제");
+    			  $.ajax({
+    				   url : '<%=request.getContextPath()%>/DeleteSchedule.do',
+    				  type : 'post',
+    				  data : { 'title' : title,
+    					       'date'  : date
+    				  },
+    				  success : function(){
+		    			  arg.event.remove();
+		    			  location.href = "../schedule/calendar.jsp";
+    				  },
+    				  error : function(xhr){
+    					  alert("삭제상태 : " + xhr.status);
+    				  },
+    				  dataType: 'text'
+    			  })
+    			  }else return;
+    		  }else{
+    			 newTitle = prompt("수정할 제목을 입력해주세요.");
+    			 if(newTitle == null){
+    				 alert("수정할 제목을 입력하지 않으셨어요!");
+    				 return;
+    			 }
+    			 newContent = prompt("수정할 내용을 입력해주세요.");
+    			 if(newContent == null){
+    				 alert("수정할 내용을 입력하지 않으셨어요!");
+    				 return;
+    			 }
+    			 $.ajax({
+    				 url : '<%=request.getContextPath()%>/UpdateSchedule.do',
+    				 type : 'post',
+    				 data :{ 'id' : id,
+    						 'newTitle' : newTitle,
+    						 'newContent' : newContent
+    				 },
+    				 success : function(res){
+						title = res.SCHEDULE_TITLE;
+    				 },
+    				 dataType:'json'
+    			 })
+						location.href = "../schedule/calendar.jsp";
+    		  }
+    	  })
+    	}// 관리자 일 경우 끝.
+    	else if(power == "N"){ // 일반회원일 경우
+    		var title = arg.event.title;
+        	var date = dateFormat(arg.event.start);
+        	var id = arg.event.id;
+        	var memId = memberId;
+        	  swal({  title : "선택한 일정을 내 캘린더에 추가하시겠습니까?",
+        		      buttons:["네!", "아니요~"]
+        	  }).then((YES) => {
+        		  if(YES){
+        			  return;
+        		  }else {
+        			$.ajax({
+            			url : '<%=request.getContextPath()%>/MemScheAdd.do',
+            			type : 'post',
+            			data : {
+            				'memId' : memId,
+            				'title' : title,
+            				'date' : date
+            			},
+            			dataType: 'json'
+            		})
+        		}
+    	  })
+    	}
+    	  }
+      }// 이벤트를 클릭했을 때 끝.
+   });
+    calendar.render();
+    
+  });
+
+  function printAll(){
+	  var schedule_list = null;
+	  $.ajax({
+		url:'<%=request.getContextPath()%>/ScheduleList.do',
+		type: 'get',
+		dataType:'json',
+		async : false,
+		success : function(res){
+			$.each(res, function(i, v){
+				res;
+			})
+			schedule_list = res;
+		},
+		error:function(xhr){
+			alert("상태 : " + xhr.status)
+		}
+	  })
+		return schedule_list;
+  }
+  
+  function dateFormat(date) {
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+
+      month = month >= 10 ? month : '0' + month;
+      day = day >= 10 ? day : '0' + day;
+      hour = hour >= 10 ? hour : '0' + hour;
+      minute = minute >= 10 ? minute : '0' + minute;
+      second = second >= 10 ? second : '0' + second;
+
+      return date.getFullYear() + '-' + month + '-' + day;// + ' ' + hour + ':' + minute + ':' + second;
+}  
+  
+</script>
+</head>
+<body>
+<%MemberVO vo=(MemberVO)session.getAttribute("loginMember"); %>
+<%if(vo!=null){
+%>
+<input type='hidden' value='<%=vo.getStatus() %>' id='status1'>	
+<input type='hidden' value='<%=vo.getMem_id() %>' id='memId'>	
+<%	
+}
+%>
+  <div id='calendar'></div>
+
+</body>
+</html>

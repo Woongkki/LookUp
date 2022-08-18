@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//iBatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="question">
+
+	<select id="selectQuesList" resultClass="quesVo" parameterClass="String">
+		select a.question_no, a.question_room_no, b.detail_name, a.mem_id, a.question_date
+		from question a, questioncate b
+		where a.detail_no=b.detail_no
+		and mem_id=#mem_id#
+		order by a.question_room_no desc		
+	</select>
+	
+	<select id="quesDetail" resultClass="quesVo" parameterClass="String">
+		select * from question where question_room_no=#question_room_no#
+	</select>
+	
+	<delete id="quesDelete" parameterClass="int">
+		delete from question where question_no=#question_no#
+	</delete>
+	
+	<update id="answerInsert" parameterClass="quesVo">
+		update question set question_a=#question_a# where question_no=#question_no#
+	</update>
+	
+	<insert id="quesInsert" parameterClass="quesVo">
+		insert into question(question_no, question_room_no, detail_no, mem_id, question_q, question_date)
+		values(question_seq.nextval, (select max(to_number(question_room_no)) from question_room), #detail_no#, #mem_id#, #question_q#, sysdate)
+	</insert>
+
+	<insert id="seqInsert" parameterClass="quesVo">
+		insert into question_room values(question_room_seq.nextval, #manager_id#)
+	</insert>
+	
+</sqlMap>

@@ -1,0 +1,23 @@
+package kr.or.ddit.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.ibatis.sqlmap.client.SqlMapException;
+
+import kr.or.ddit.vo.MessegeVO;
+import kr.or.ddit.vo.QuestionVO;
+
+
+
+public interface IMemberMessegeDao {
+
+	List<String> qsrNoListSearch(String id)throws SQLException;
+
+	List<Integer> msrNoSearch(String id)throws SQLException;
+
+	List<QuestionVO> qsListSearch(String qsnum)throws SQLException;
+
+	List<MessegeVO> msListSearch(int msnum)throws SQLException;
+
+}

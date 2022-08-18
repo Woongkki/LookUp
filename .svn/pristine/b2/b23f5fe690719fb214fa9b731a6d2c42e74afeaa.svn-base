@@ -1,0 +1,10 @@
+package kr.or.ddit.dao;
+
+public class prpr22 {
+
+	public static void main(String[] args) {
+		System.out.println("!!!!!");
+
+	}
+
+}

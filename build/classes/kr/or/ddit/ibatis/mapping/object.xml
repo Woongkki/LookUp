@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="object">
+
+	<select id="selectOb" resultClass="objectVO">
+		SELECT * FROM OBJECTBOARD
+		ORDER BY OBJECT_NO DESC
+	</select>
+	
+	<select id="totalOb" resultClass="int">
+		SELECT COUNT(*) FROM OBJECTBOARD
+	</select>
+	
+	<insert id="insertOb" parameterClass="objectVO">
+		INSERT INTO OBJECTBOARD(OBJECT_NO, MEM_ID, TITLE, CONTENT, CREATE_DATE)
+ 		VALUES (OB_BOARD_NO_SEQ.NEXTVAL, #mem_id#, #title#, #content#, SYSDATE)
+	</insert>
+
+</sqlMap>

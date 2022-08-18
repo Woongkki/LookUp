@@ -1,0 +1,38 @@
+package kr.or.ddit.schedule.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import kr.or.ddit.schedule.service.IScheduleService;
+import kr.or.ddit.schedule.service.ScheduleServiceImpl;
+import kr.or.ddit.schedule.vo.ScheVO;
+
+
+@WebServlet("/UpdateSchedule.do")
+public class UpdateSchedule extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id")); 
+		String newTitle = request.getParameter("newTitle");
+		String newContent = request.getParameter("newContent");
+		
+		ScheVO vo = new ScheVO();
+		vo.setSCHEDULE_NO(id);
+		vo.setSCHEDULE_TITLE(newTitle);
+		vo.setSCHEDULE_CONTENT(newContent);
+		IScheduleService service = ScheduleServiceImpl.getInstance();
+		int res = service.updateSchedule(vo);
+		
+		request.setAttribute("res", res);
+		
+		request.getRequestDispatcher("calendar/calendar.jsp").forward(request, response);
+	}
+
+}

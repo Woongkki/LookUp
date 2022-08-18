@@ -1,0 +1,57 @@
+package kr.or.ddit.member.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.or.ddit.member.service.IMemberMessegeService;
+import kr.or.ddit.member.service.MemberMessegeServiceImpl;
+import kr.or.ddit.member.vo.MemberVO;
+
+
+/**
+ * Servlet implementation class MessageRoomList
+ */
+@WebServlet("/MessageRoomList.do")
+public class MessageRoomList extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		  HttpSession session=request.getSession();
+		  request.setCharacterEncoding("utf-8");
+		  MemberVO vo=(MemberVO)session.getAttribute("loginMember");
+		  String id=vo.getMem_id();
+		  IMemberMessegeService sv=MemberMessegeServiceImpl.getInstance();
+		  List<String>qsrNoList=sv.qsrNoListSearch(id);
+		 
+		
+		  request.setAttribute("qsNoList", qsrNoList);
+		  List<Integer>msrNoList=sv.msrNoSearch(id);
+		
+	//	  System.out.println(qsrNoList);
+	//	  System.out.println(msrNoList);
+		  
+		  
+		  request.setAttribute("msNoList", msrNoList);
+		  request.getRequestDispatcher("MessegeRoomSearch.do").forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

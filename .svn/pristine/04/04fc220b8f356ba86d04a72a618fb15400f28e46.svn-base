@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LOOK UP</title>
+
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script src="../js/gif.js"></script>
+<script src="../js/board.js"></script>
+
+<link rel="stylesheet" href="../css/memberJoin.css">
+
+<style>
+.profile {
+	border: 4px double;
+	margin: 10px;
+	padding: 10px;
+}
+
+.photo {
+	width: 160px;
+	height: auto;
+	border: 3px solid lightgray;
+	position: absolute;
+	left: 340px;
+	margin: 30px;
+	padding : 3px;
+}
+
+.info1 {
+	display: inline-block;
+}
+
+.info2 {
+	display: block;
+	width: 500px;
+	top: 500px;
+}
+
+.iframe {
+	position: fixed;
+	top: 140px;
+	left: 43%;
+	width: 600px;
+	height: 400px;
+}
+
+#iframe {
+	width: 1000px;
+	height: 450px;
+}
+
+.info1, .info2 {
+	flex: 1;
+	/*     border: 0.1px solid gray; */
+	/* width: 270px; */
+	height: auto;
+	margin: 1px;
+}
+
+
+</style>
+
+
+</head>
+<body>
+
+	<!-- 상단메뉴 -->
+	<header>
+		<nav>
+			<div id="topMenu" class="FF">
+				<div class="title">
+					<a href="../example/main.html"> <img class="titleImg"
+						alt="메인배너R.png" src="../images/메인배너R.png">
+					</a>
+				</div>
+
+				<div class="dropdown FF topText">
+					<a href="#" class="join">JOIN</a>
+				</div>
+
+				<div class="dropdown FF topText">
+					<a href="#" class="login">LOGIN</a>
+				</div>
+
+
+				<div class="search">
+					<input type="text" placeholder="검색어 입력"> 
+					<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				</div>
+
+
+
+				<div class="dropdown FF ">
+					<button id="notice" class="dropbtn FF ahover">
+						<span class="dropbtn_icon"></span> 공지사항
+					</button>
+					<div class="dropdown-content">
+						<a href="#">공지사항</a> 
+						<a href="#">자주 묻는 질문</a> 
+						<a href="#">1:1문의</a>
+					</div>
+				</div>
+
+				<div class="dropdown FF">
+					<button class="dropbtn FF ahover">
+						<span class="dropbtn_icon"></span> 게시판
+					</button>
+					<div class="dropdown-content">
+						<a href="#">관측게시판</a> 
+						<a href="#">자유게시판</a> 
+						<a href="#">관측회게시판</a>
+					</div>
+				</div>
+
+
+
+			</div>
+		</nav>
+	</header>
+
+	<aside>
+
+		<ul>
+			<li><a class="home" href="#">게시판</a></li>
+			<li><a href="#">관측게시판</a></li>
+			<li><a href="#">자유게시판</a></li>
+			<li><a href="#">관측회게시판</a></li>
+		</ul>
+
+
+	</aside>
+
+	<!-- 본문 -->
+	<section>
+		<div class="mainContent">
+			<div class="profile">
+
+				<div class="write">
+						<a href="../example/iframeContent.html" target="ifrcomputer" style="color:black; text-decoration-line: none">작성 글 │</a>
+						<a href="../example/iframeReply.html" target="ifrcomputer" style="color:black; text-decoration-line: none">작성 댓글</a>
+				</div>
+
+				<div class="iframe">
+					<iframe id="iframe" SRC="../example/iframeContent.html" name="ifrcomputer"></iframe>
+				</div>
+
+				<div class="infoImg">
+					<img class="photo" alt="하잇.PNG" src="../images/하잇.PNG">
+				</div>
+
+				<div class="info1">
+					<div class="id">
+						<label> 아이디</label> 
+						<input type="text" value="아이디" class="infoLogin">
+					</div>
+						<br>
+					<div class="pass">
+						<label> 비밀번호</label> 
+						<input type="text" value="비밀번호" class="infoPass">
+					</div>
+						<br>
+					<div class="name">
+						<label> 이름</label> 
+						<input type="text" value="이름" class="infoName">
+					</div>
+						<br>
+				</div>
+				<div class="info2">
+					<div class="birth">
+						<label> 생년월일</label> 
+						<input type="text" value="생년월일" class="infoBirth">
+					</div>
+						<br>
+					<div class="addr">
+						<label> 주소</label> 
+						<input type="text" value="주소" class="infoAddr">
+					</div>
+						<br>
+					<div class="mail">
+						<label> 이메일</label> 
+						<input type="text" value="이메일" class="infoMail">
+					</div>
+				</div>
+				
+				<div class="btns">
+					
+					<!-- 활동정지 설정 모달창으로 이동 -->
+					<input type="button" value="활동정지" class="btnStop">
+					
+					<!-- 회원목록페이지로 이동 -->
+					<input type="button" value="뒤로가기" class="btnBack">
+				
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+</body>
+</html>

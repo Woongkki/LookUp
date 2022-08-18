@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/earth.css">
+
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script src="../js/jquery.serializejson.min.js.js"></script>
+
+<script>
+	$(function(){
+          
+	})
+</script>
+
+<style>
+</style>
+
+</head>
+<body>
+<div class="preloader" onclick="location.href='../main/main.jsp';"> 
+  <div class="preloader__ring">
+    <div class="preloader__sector">L</div>
+    <div class="preloader__sector">O</div>
+    <div class="preloader__sector">O</div>
+    <div class="preloader__sector">K</div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector">U</div>
+    <div class="preloader__sector">P</div>
+    <div class="preloader__sector">.</div>
+    <div class="preloader__sector">.</div>
+    <div class="preloader__sector">🌙</div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+  </div>
+  
+  <div class="preloader__ring">
+    <div class="preloader__sector">L</div>
+    <div class="preloader__sector">o</div>
+    <div class="preloader__sector">a</div>
+    <div class="preloader__sector">d</div>
+    <div class="preloader__sector">i</div>
+    <div class="preloader__sector">n</div>
+    <div class="preloader__sector">g</div>
+    <div class="preloader__sector">.</div>
+    <div class="preloader__sector">.</div>
+    <div class="preloader__sector">.</div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+    <div class="preloader__sector"></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+package kr.or.ddit.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.ddit.vo.ObserveVO;
+
+public interface IObserveDao {
+
+	List<ObserveVO> oblist(String id)throws SQLException;
+
+}

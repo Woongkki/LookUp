@@ -1,0 +1,59 @@
+package kr.or.ddit.notice.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.or.ddit.notice.service.INoticeService;
+import kr.or.ddit.notice.service.NoticeServiceImpl;
+import kr.or.ddit.notice.vo.NoticeVO;
+
+@WebServlet("/selectNoticeList.do")
+public class SelectNoticeList extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("서블릿 체크");
+		request.setCharacterEncoding("utf-8");
+		
+		Map<String, Object> map = new HashMap<String, Object>();// 
+		INoticeService service = NoticeServiceImpl.getInstance();
+		
+		Paging pg = new Paging(service, request);//
+	    request.setAttribute("paging", pg);//
+	    int startnum = pg.startnum;//
+        int endnum = pg.endnum;//
+        String stype = pg.type;////
+        String sword = pg.word;////
+        map.put("start", startnum);//
+        map.put("end", endnum);//
+        map.put("stype", stype);////
+        map.put("sword", sword);////
+		
+		List<NoticeVO> noticeList = service.selectNoticeList(map);
+		
+		//System.out.println("서블릿에서 리스트 목록 : " + noticeList);
+		
+		//HttpSession session=request.getSession();
+		//if(session.getAttribute("loginMember")!=null) {
+			request.setAttribute("noticeList", noticeList);
+			request.getRequestDispatcher("notice/notice.jsp").forward(request, response);
+		//}else {
+			//request.getRequestDispatcher("main/main.jsp").forward(request, response);
+		//}
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

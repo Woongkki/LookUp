@@ -1,0 +1,36 @@
+package kr.or.ddit.member.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.member.vo.MemberVO;
+import kr.or.ddit.member.vo.ZipVO;
+
+public interface IMemberDao {
+  public int memberIdCheck(String id) throws SQLException;
+  
+  public List<ZipVO>zipList(String s) throws SQLException ;
+  
+  public int insertMember(MemberVO vo)throws SQLException;
+  
+  public int memlogin(Map<String,String>info)throws SQLException;
+  
+  public int logidCheck(String id)throws SQLException;
+  
+  public MemberVO memberIdSearch(String id)throws SQLException;
+  
+  public String memStatus(String memid)throws SQLException;
+  
+  public List<ZipVO> zipAllSearch()throws SQLException;
+  
+  public int updateMember(MemberVO memVo)throws SQLException;
+  
+  public int nomalinsertMember(String memId)throws SQLException;
+  
+  public void loginlogCreate(Map<String,String>map)throws SQLException;
+
+public int memStatusBUpdate(String id)throws SQLException;
+
+public MemberVO login(Map<String, String> para)throws SQLException;
+}
